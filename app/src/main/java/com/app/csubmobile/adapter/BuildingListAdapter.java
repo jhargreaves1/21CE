@@ -1,17 +1,19 @@
 package com.app.csubmobile.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.app.csubmobile.MapActivity;
 import com.app.csubmobile.R;
 import com.app.csubmobile.data.BuildingItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,7 +53,13 @@ public class BuildingListAdapter extends ArrayAdapter<BuildingItem> {
 
             @Override
             public void onClick(View arg0) {
-                Toast.makeText(context, items.get(position).getName()+"", Toast.LENGTH_SHORT).show();
+                BuildingItem selectedBuilding = items.get(position);
+                if (selectedBuilding != null) {
+                    Intent i = new Intent(context, MapActivity.class);
+                    i.putExtra("Building", (Serializable) selectedBuilding);
+                    context.startActivity(i);
+                }
+                //Toast.makeText(context, selectedBuilding.getName()+"", Toast.LENGTH_SHORT).show();
             }
         });
 

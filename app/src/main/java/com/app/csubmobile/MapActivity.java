@@ -41,6 +41,7 @@ import android.widget.Toast;
 import com.app.csubmobile.data.BuildingItem;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Marker;
+import com.mapbox.mapboxsdk.annotations.MarkerView;
 import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
@@ -97,10 +98,16 @@ public class MapActivity extends AppCompatActivity
     public String bestProvider;
     private PolylineOptions newroute;
     private DrawerLayout mDrawerLayout;
+    private Intent i;
     public List<BuildingItem> buildings = new ArrayList<BuildingItem>();
+    MarkerView clickedMarker;
+    private BuildingItem selectedBuilding;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        i = getIntent();
+        selectedBuilding = (BuildingItem) i.getSerializableExtra("Building");
+
         super.onCreate(savedInstanceState);
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
@@ -114,11 +121,7 @@ public class MapActivity extends AppCompatActivity
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
 
-        // SCI-III location
-        origin = Position.fromCoordinates(-119.103579, 35.348849);
 
-        // Library location
-        //destination = Position.fromCoordinates(-119.107183,35.349099);
 
         // Create a mapView
         mapView = (MapView) findViewById(R.id.mapview);
@@ -129,275 +132,30 @@ public class MapActivity extends AppCompatActivity
                 map = mapboxMap;
                 new ParseCSUBGeoJson().execute();
 
+                // if this is launched from search activity then we get the selected building that
+                // user searched
+                if (selectedBuilding != null) {
+                    Marker selected = mapboxMap.addMarker(new MarkerViewOptions()
+                            .position(new LatLng(selectedBuilding.getLng(), selectedBuilding.getLat()))
+                            .title(selectedBuilding.getName())
+                            .snippet(selectedBuilding.getName())
+                            .visible(true));
+                    // set selected building as destination
+                    destination = Position.fromCoordinates(selected.getPosition().getLongitude(),selected.getPosition().getLatitude());
+                    // center to that marker
+                    centerCamera(selected);
+                }
                 /*
                 // University Advancement #7
                 mapboxMap.addMarker(new MarkerOptions()
                         .position(new LatLng(35.350418, -119.106344))
                         .title("University Advancement")
                         .snippet("University Advancement"));
-
-                // Administration West #8
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350424, -119.106000))
-                        .title("Administration West")
-                        .snippet("Administration West"));
-
-                // Administration East #5
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350634, -119.105040))
-                        .title("Administration East")
-                        .snippet("Administration East"));
-
-                // Administration #9
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350371, -119.105524))
-                        .title("Administration")
-                        .snippet("Administration"));
-
-                // Education #34
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350200, -119.104463))
-                        .title("Education")
-                        .snippet("Education Building"));
-
-                // Student Services #10
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350212, -119.104998))
-                        .title("Student Services")
-                        .snippet("Student Services"));
-
-                // Dorothy Donahoe Hall #32
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350418, -119.103598))
-                        .title("Dorothy Donahoe Hall")
-                        .snippet("Dorothy Donahoe Hall"));
-
-                // Science I #30
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349666, -119.103787))
-                        .title("SCI-I")
-                        .snippet("Science I"));
-
-                // Science II #38
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349600, -119.103222))
-                        .title("SCI-II")
-                        .snippet("Science II"));
-
-                // Science III #48
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348849, -119.103579))
-                        .title("SCI-III")
-                        .snippet("Science III"));
-
-                // Walter Stiern Library #43
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(-119.103211, 35.351264))
-                        .title("Library")
-                        .snippet("Walter Stiern Library"));
-
-                // Plant Operation #11
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349692, -119.105106))
-                        .title("Plant Operation")
-                        .snippet("Plant Operation"));
-
-                // Lecture Building #3
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350909, -119.105053))
-                        .title("Lecture Building")
-                        .snippet("Lecture Building"));
-
-                // Performing Arts #4
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350996, -119.104625))
-                        .title("Performing Arts")
-                        .snippet("Performing Arts"));
-
-                // Romberg Nursing Center #31
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349699, -119.104625))
-                        .title("Romberg Nursing Center")
-                        .snippet("Romberg Nursing Center"));
-
-                // Computing/Telecom Center #65
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.351315, -119.102745))
-                        .title("Computing/Telecom Center")
-                        .snippet("Computing/Telecom Center"));
-
-                // Runner Cafe #38
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350780, -119.102374))
-                        .title("Runner Cafe")
-                        .snippet("Runner Cafe"));
-
-                // Classroom Building #1
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.351211, -119.105479))
-                        .title("Classroom Building")
-                        .snippet("Classroom Building"));
-
-                // Fine Arts #2
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.351323, -119.104985))
-                        .title("Fine Arts")
-                        .snippet("Fine Arts"));
-
-                // Faculty Towers #6
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350682, -119.105916))
-                        .title("Faculty Towers")
-                        .snippet("Faculty Towers"));
-
-                // Business Developement Center Admin & Faculty Offices #44A
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349086, -119.105032))
-                        .title("Business Admin & Faculty Offices")
-                        .snippet("Business Developement Center Admin & Faculty Offices"));
-
-                // Business Developement Center Classrooms #44B
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348793, -119.104765))
-                        .title("Business Developement Center Classrooms")
-                        .snippet("Business Developement Center Classrooms"));
-
-                // Business Developement Center Extended University #44C
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348381, -119.104897))
-                        .title("Extended University")
-                        .snippet("Extended University"));
-
-                // Business Developement Center Dezember Leadership Development Center #44D
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348473, -119.105294))
-                        .title("Dezember Leadership Development Center")
-                        .snippet("Dezember Leadership Development Center"));
-
-                // Business Developement Center Office of the President #44E
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348827, -119.105289))
-                        .title("Office of the President")
-                        .snippet("Office of the President"));
-
-                // Engineering Modulars #83
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348057, -119.104919))
-                        .title("Engineering Modulars")
-                        .snippet("Engineering Modulars FAB Lab"));
-
-                // Student Health Services #35
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.347882, -119.103873))
-                        .title("Student Health Services")
-                        .snippet("Student Health Services"));
-
-                // SPhysical Education #33
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348283, -119.102726))
-                        .title("Physical Education")
-                        .snippet("Physical Education"));
-
-                // Icardo Center #52
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.347566, -119.102673))
-                        .title("Icardo Center")
-                        .snippet("Icardo Center"));
-
-                // Coffee House #68
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349937, -119.104365))
-                        .title("Coffee House")
-                        .snippet("Coffee House - Peets Coffee"));
-
-                // University Police #60
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348785, -119.102974))
-                        .title("University Police")
-                        .snippet("University Police"));
-
-                // Student Recreation Center #67
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348866, -119.101842))
-                        .title("REC Center")
-                        .snippet("Student Recreation Center"));
-
-                // Student Union #67
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349827, -119.101502))
-                        .title("Student Union")
-                        .snippet("Student Union"));
-
-                // Greenhouse #66
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350395, -119.101187))
-                        .title("Greenhouse")
-                        .snippet("Greenhouse"));
-
-                // J. Antonino Sports Center #61
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348290, -119.101745))
-                        .title("Sports Center")
-                        .snippet("J. Antonino Sports Center"));
-
-                // Handball Courts #40
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.348067, -119.101514))
-                        .title("Handball Courts")
-                        .snippet("Handball Courts"));
-
-                // J.R. Hillman Aquatic Center #45
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.347874, -119.101487))
-                        .title("Aquatic Center")
-                        .snippet("J.R. Hillman Aquatic Center"));
-
-                // Doré Theatre #39
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.352230, -119.105465))
-                        .title("Doré Theatre")
-                        .snippet("Doré Theatre"));
-
-                // Music Building #39a
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.351849, -119.105892))
-                        .title("Music Building")
-                        .snippet("Music Building"));
-
-                // University Grill #23
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350202, -119.106847))
-                        .title("University Grill")
-                        .snippet("University Grill"));
-
-                // University Grill #13
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.349099, -119.107183))
-                        .title("Modular West")
-                        .snippet("Modular West"));
-
-                // Hardt Field
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.347644, -119.107519))
-                        .title("Hardt Field")
-                        .snippet("Hardt Field"));
-
-                // Amphitheatre #62
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.353452, -119.102502))
-                        .title("Amphitheatre")
-                        .snippet("Amphitheatre"));
-
-                // Rowdy
-                mapboxMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(35.350047, -119.101774))
-                        .title("Rowdy")
-                        .snippet("Rowdy"));
-                 */
-
+                */
 
 
                 mapboxMap.setInfoWindowAdapter(new MapboxMap.InfoWindowAdapter() {
+
                     @Nullable
                     @Override
                     public View getInfoWindow(@NonNull Marker marker) {
@@ -418,18 +176,13 @@ public class MapActivity extends AppCompatActivity
                         ImageView buildingImage = new ImageView(MapActivity.this);
                         TextView description = new TextView(MapActivity.this);
 
-                        // change marker's visibility
-                        //map.addMarker();
-
+                        // set marker to visible on click
+                        clickedMarker = (MarkerView) marker;
+                        clickedMarker.setVisible(true);
 
                         // set destination to marker clicked and center
                         destination = Position.fromCoordinates(marker.getPosition().getLongitude(),marker.getPosition().getLatitude());
-                        CameraPosition position = (new CameraPosition.Builder()
-                                .target(marker.getPosition())
-                                .tilt(30)
-                                .build());
-                        map.animateCamera(CameraUpdateFactory
-                                .newCameraPosition(position), 1000);
+                        centerCamera(marker);
 
                         switch (marker.getTitle()) {
                             case "Well Core Repository":
@@ -746,7 +499,11 @@ public class MapActivity extends AppCompatActivity
 
                         return parent;
                     }
+
+
+
                 });
+
 
                 floatingActionButton = (FloatingActionButton) findViewById(R.id.location_toggle_fab);
                 floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -872,7 +629,7 @@ public class MapActivity extends AppCompatActivity
                     .position(new LatLng(35.349827, -119.101502))
                     .title("Student Union")
                     .snippet("Student Union"));*/
-            if (markers.size() > 0) {
+            /*if (markers.size() > 0) {
                 for (int i = 0; i < points.size(); i++) {
                     Marker marker = map.addMarker(new MarkerViewOptions()
                             .position(markers.get(i))
@@ -880,10 +637,30 @@ public class MapActivity extends AppCompatActivity
                             .snippet(titles.get(i))
                             .visible(false));
                 }
+            }*/
+        }
+    }
+
+    private void showAllMarkers () {
+        if (buildings.size() > 0) {
+            for (int i = 0; i < buildings.size(); i++) {
+                Marker marker = map.addMarker(new MarkerViewOptions()
+                        .position(new LatLng(buildings.get(i).getLng(), buildings.get(i).getLat()))
+                        .title(buildings.get(i).getName())
+                        .snippet(buildings.get(i).getName())
+                        .visible(true));
             }
         }
     }
 
+    private void centerCamera (Marker marker) {
+        CameraPosition position = (new CameraPosition.Builder()
+                .target(marker.getPosition())
+                .tilt(30)
+                .build());
+        map.animateCamera(CameraUpdateFactory
+                .newCameraPosition(position), 1000);
+    }
 
     private void drawBorder(LinearLayout parent) {
         GradientDrawable border = new GradientDrawable();
