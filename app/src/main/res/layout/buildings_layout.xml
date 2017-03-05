@@ -3,8 +3,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
+    <EditText
+        android:id="@+id/search"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+    <AutoCompleteTextView
+        android:id="@+id/txt_search"
+        android:hint="@string/placeholder_search"
+        android:completionThreshold="1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/buildings_list" />
+        android:layout_height="wrap_content" />
+
+
 </LinearLayout>

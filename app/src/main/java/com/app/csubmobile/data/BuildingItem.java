@@ -24,6 +24,14 @@ public class BuildingItem implements Serializable {
         this.buildingAbbrev = buildingAbbrev;
     }
 
+    public BuildingItem(String buildingName, String buildingAbbrev, double lat) {
+        super();
+        this.buildingName = buildingName;
+
+        this.lat = lat;
+        this.buildingAbbrev = buildingAbbrev;
+    }
+
     public void setName(String buildingName) {
         this.buildingName = buildingName;
     }

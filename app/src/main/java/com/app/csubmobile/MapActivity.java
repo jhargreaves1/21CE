@@ -66,6 +66,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class MapActivity extends AppCompatActivity
     private MapboxDirections client;
     private MapView mapView;
     private MapboxMap map;
-    private FloatingActionButton floatingActionButton;
+    private FloatingActionButton floatingActionButton, searchActionButton;
     private LocationServices locationServices;
     private static final int PERMISSIONS_LOCATION = 0;
     private Position origin;
@@ -109,6 +110,7 @@ public class MapActivity extends AppCompatActivity
 
         locationServices = LocationServices.getLocationServices(MapActivity.this);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        searchActionButton = (FloatingActionButton) findViewById(R.id.search_toggle_fab);
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
 
@@ -772,6 +774,21 @@ public class MapActivity extends AppCompatActivity
                         startActivity(i);*/
                     }
                 });
+                searchActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (map != null) {
+                            Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
+                            i.putExtra("Buildings", (Serializable) buildings);
+                            startActivity(i);
+                        }
+
+                        // intent to launch building list
+                        /*Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
+                        i.putExtra("Buildings", (Serializable) buildings);
+                        startActivity(i);*/
+                    }
+                });
             }
         });
         // runtime permission check~~~~~~
@@ -850,10 +867,11 @@ public class MapActivity extends AppCompatActivity
                     .snippet("Student Union"));*/
             if (markers.size() > 0) {
                 for (int i = 0; i < points.size(); i++) {
-                    map.addMarker(new MarkerOptions()
+                    Marker marker = map.addMarker(new MarkerOptions()
                             .position(markers.get(i))
                             .title(titles.get(i))
                             .snippet(titles.get(i)));
+
                 }
             }
         }
