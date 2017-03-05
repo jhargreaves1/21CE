@@ -41,7 +41,7 @@ import android.widget.Toast;
 import com.app.csubmobile.data.BuildingItem;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Marker;
-import com.mapbox.mapboxsdk.annotations.MarkerOptions;
+import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -418,11 +418,18 @@ public class MapActivity extends AppCompatActivity
                         ImageView buildingImage = new ImageView(MapActivity.this);
                         TextView description = new TextView(MapActivity.this);
 
+                        // change marker's visibility
+                        //map.addMarker();
+
+
                         // set destination to marker clicked and center
                         destination = Position.fromCoordinates(marker.getPosition().getLongitude(),marker.getPosition().getLatitude());
-                        map.setCameraPosition(new CameraPosition.Builder()
+                        CameraPosition position = (new CameraPosition.Builder()
                                 .target(marker.getPosition())
+                                .tilt(30)
                                 .build());
+                        map.animateCamera(CameraUpdateFactory
+                                .newCameraPosition(position), 1000);
 
                         switch (marker.getTitle()) {
                             case "Well Core Repository":
@@ -867,11 +874,11 @@ public class MapActivity extends AppCompatActivity
                     .snippet("Student Union"));*/
             if (markers.size() > 0) {
                 for (int i = 0; i < points.size(); i++) {
-                    Marker marker = map.addMarker(new MarkerOptions()
+                    Marker marker = map.addMarker(new MarkerViewOptions()
                             .position(markers.get(i))
                             .title(titles.get(i))
-                            .snippet(titles.get(i)));
-
+                            .snippet(titles.get(i))
+                            .visible(false));
                 }
             }
         }
