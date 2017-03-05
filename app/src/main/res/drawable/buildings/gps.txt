@@ -1,0 +1,47 @@
+
+Sci I   ,		35.349777, -119.103186
+Sci II  ,		35.349702, -119.103973
+SCi III , 		35.348849, -119.103579
+Fab Lab , 		35.348036, -119.104594
+Health Services, 	35.347899, -119.103626
+Extended University, 	35.348452, -119.104969
+LeaderShip Developement, 35.348567, -119.105200
+Business Dev. Classrooms,35.348751, -119.104893
+Business Dev. Offices,	35.349004, -119.104977
+Nursing Center,		35.349698, -119.104484
+Reprographics,	 	35.349566, -119.105108
+Icardo center,		35.347559, -119.102998
+Physical Education, 	35.348188, -119.102963
+Police Dept.		35.348736, -119.102977
+Student Rec. Center,	35.349016, -119.102024
+Bookstore,		35.349652, -119.101480
+Student Union-Rowdys, 	35.350047, -119.101774
+Runner Cafe, 		35.350606, -119.102302
+Library,		35.351264, -119.103211
+Dore theatre, 		35.352316, -119.105233
+Donahoe Hall, 		35.350588, -119.103998
+Education,		35.350437, -119.104453
+Admin East ,		35.350529, -119.104957
+Student Services ,	35.350403, -119.104846
+Admin(Human res.),	35.350523, -119.105122
+Ser.for student w dis., 35.350181, -119.105216
+High School Equ. prog ,	35.350776, -119.105143
+Writing res. center, 	35.350639, -119.105137
+Edu. Oppourtunity Prog,	35.350911, -119.105189
+Lecture building,	35.351065, -119.104925
+Fine Arts, 		35.351306, -119.105002
+Classroom Build.,	35.351224, -119.105353
+Faculty Tower,		35.350726, -119.105935
+Writing Lab plus,	35.350522, -119.106318
+Off. of Stu. rights,	35.350965, -119.102243
+Office of Vice pres.
+for student affairs,	35.350965, -119.102243
+Telecomunnications, 	35.349536, -119.105279
+Tennis courts,		35.349126, -119.106586
+Aquatic center,		35.347525, -119.101795
+Off. of the President,	35.348823, -119.105178
+Running track ,		35.344481, -119.102224
+Hardt field ,		35.347644, -119.107519
+Ampitheatre ,		35.353452, -119.102502
+Peets Coffee ,		35.349892, -119.104351
+Performing Arts,	35.351024, -119.104744

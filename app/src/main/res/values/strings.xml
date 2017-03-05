@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">CSUB</string>
+    <string name="footer">www.csub.edu</string>
+    <string name="map">Map Screen</string>
+    <string name="news">News Screen</string>
+    <string name="directory">Directory Screen</string>
+    <string name="dining">Dining Screen</string>
+    <string name="events">Events Screen</string>
+    <string name="social_media">Social Media Screen</string>
+    <string name="transportation">Transportation Screen</string>
+    <string name="schedule">Schedule Screen</string>
+    <string name="blackboard_moodle">Blackboard/Moodle Screen</string>
+    <string name="button">Button</string>
+
+    <string name="title_activity_news">News</string>
+    <string name="title_activity_events">Events</string>
+    <string name="title_activity_map">Map</string>
+    <string name="title_activity_directory">Directory</string>
+    <string name="title_activity_socialmedia">Social Media</string>
+    <string name="title_activity_dining">Dining</string>
+    <string name="title_activity_transportation">Transportation</string>
+    <string name="title_activity_schedule">Schedule</string>
+    <string name="title_activity_moodle">Blackboard/Moodle</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="home">Home</string>
+
+    <string name="access_token">pk.eyJ1IjoicXV5cG5nIiwiYSI6ImNpdzdmbjZsMzAwMWMyd2xrcDFla2R5dTAifQ.Er6cEscvlKaD89-IWVcy-g</string>
+    <string name="my_style_mapbox">mapbox://styles/quypng/civhzb2c9002x2ko4xb3qzcv2</string>
+
+    <string name="titlelabel">"Title : "</string>
+    <string name="link">"Date/Link : "</string>
+
+    <string name="sci3_des">Science III</string>
+</resources>
