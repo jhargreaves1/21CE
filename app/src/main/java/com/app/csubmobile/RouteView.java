@@ -4,60 +4,56 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.NavUtils;
-import android.view.Gravity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
-
-import java.util.ArrayList;
-import java.io.IOException;
-import java.util.HashMap;
+import android.widget.TextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-public class TransportationActivity extends AppCompatActivity
+import java.io.IOException;
+
+
+public class RouteView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
 
-    ListView listview;
-    TransViewAdapter adapter;
+    TextView routeTitle;
+    TextView newsContent;
+    TextView newsDate;
     ProgressDialog mProgressDialog;
-    ArrayList<HashMap<String, String>> arraylist;
-    static String TITLE = "title";
-    static String LINK = "link";
-    // URL Address
-    String url = "https://www.getbus.org/maps-and-timetables/";
+
+    String csubSite = "https://www.getbus.org/maps-and-timetables/";
+    String title;
+    String link;
+    String url;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.transportation_layout);
+        setContentView(R.layout.trans_singleview_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent i = getIntent();
+        title = i.getStringExtra("title");
+        link = i.getStringExtra("link");
+        //link = link.replaceAll("\\s+","%20");
+        url = csubSite + link;
+
+        TextView txtTitle = (TextView) findViewById(R.id.title);
+        txtTitle.setText(title);
+
         // Execute DownloadJSON AsyncTask
         new JsoupListView().execute();
-
-        FloatingActionButton backtotop = (FloatingActionButton) findViewById(R.id.backtotop);
-        backtotop.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listview.smoothScrollToPosition(0,0);
-                //listview.smoothScrollBy(0, 0);
-                //listview.setSelection(0);
-            }
-        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -103,9 +99,7 @@ public class TransportationActivity extends AppCompatActivity
             }
             return true;
         }
-        if (id == R.id.home) {
-            NavUtils.navigateUpFromSameTask(this);
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -164,39 +158,54 @@ public class TransportationActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(TransportationActivity.this);
-            mProgressDialog.setTitle("Retrieving tranportation content...");
+            mProgressDialog = new ProgressDialog(RouteView.this);
+            mProgressDialog.setTitle("Retrieving news content...\"");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
         }
 
+        String articleContent = "";
+        String articleDate = "";
+        String articleTitle = "";
+
         @Override
         protected Void doInBackground(Void... params) {
-            arraylist = new ArrayList< >();
             try {
+                // Connect to the Website URL
                 Document doc = Jsoup.connect(url).get();
-                //for (Element div : doc.select("div[class=article_text]")) {
-                for (Element div : doc.select("section[class=page-section white]")) {
-                    for (Element row : div.select("h3")) {
-                        HashMap<String, String> map = new HashMap< >();
-                        map.put("title", row.text());
-                        //map.put("link", row.attr("</a>"));
-                        arraylist.add(map);
+                for (Element div : doc.select("div[class=article_text]")) {
+                    for (Element header1 : div.select("h1")) {
+                        articleTitle = header1.text();
                     }
+                    // check if div element has its own text
+                    // if is not empty, fetch the content else
+                    // fetch the content in <p>
+                    if (!div.ownText().isEmpty()) {
+                        articleContent += div.ownText();
+                    } else {
+                        for (Element para : div.select("p")) {
+                            articleContent += para.text() + "\n\n";
+                        }
+                    }
+                }
+                for (Element div : doc.select("div[class=articleDate]")) {
+                    articleDate = div.text();
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            listview = (ListView) findViewById(R.id.trans_list);
-            adapter = new TransViewAdapter(TransportationActivity.this, arraylist);
-            listview.setAdapter(adapter);
+            newsContent = (TextView) findViewById(R.id.contentView);
+            newsContent.setText(articleContent);
+            newsDate = (TextView) findViewById(R.id.newsDate);
+            newsDate.setText(articleDate);
             mProgressDialog.dismiss();
         }
     }

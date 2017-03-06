@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true">
 
             <include
-                layout="@layout/content_transportation" />
+                layout="@layout/trans_singleview_constraint" />
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>

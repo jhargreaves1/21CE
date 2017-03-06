@@ -34,6 +34,9 @@
     <string name="titlelabel">"Title : "</string>
     <string name="link">"Date/Link : "</string>
 
+    <string name="route">"Route : "</string>
+    <string name="info">"Info : "</string>
+
     <string name="sci3_des">Science III</string>
-    <string name="placeholder_search">Search...</string>
+    <string name="placeholder_search">"Search..."</string>
 </resources>
