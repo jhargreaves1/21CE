@@ -545,6 +545,7 @@ public class MapActivity extends AppCompatActivity
                             Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
                             i.putExtra("Buildings", (Serializable) buildings);
                             startActivity(i);
+                            finish();
                         }
 
                         // intent to launch building list

@@ -1,5 +1,6 @@
 package com.app.csubmobile.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -58,6 +59,7 @@ public class BuildingListAdapter extends ArrayAdapter<BuildingItem> {
                     Intent i = new Intent(context, MapActivity.class);
                     i.putExtra("Building", (Serializable) selectedBuilding);
                     context.startActivity(i);
+                    ((Activity)context).finish();
                 }
                 //Toast.makeText(context, selectedBuilding.getName()+"", Toast.LENGTH_SHORT).show();
             }
