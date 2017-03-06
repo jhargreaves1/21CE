@@ -36,4 +36,12 @@
         android:fitsSystemWindows="false"
         app:menu="@menu/activity_news_drawer" />
 
+    <CalendarView
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </CalendarView>
+
+
+
 </android.support.v4.widget.DrawerLayout>

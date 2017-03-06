@@ -35,6 +35,7 @@ import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CalendarView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -66,6 +67,8 @@ public class ScheduleActivity extends Activity
     private Button mCallApiButton;
     ProgressDialog mProgress;
 
+    CalendarView calendar;
+
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -77,7 +80,7 @@ public class ScheduleActivity extends Activity
 
     DrawerLayout drawer;
 
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinearLayout activityLayout = new LinearLayout(this);
@@ -123,6 +126,21 @@ public class ScheduleActivity extends Activity
         mCredential = GoogleAccountCredential.usingOAuth2(
                 getApplicationContext(), Arrays.asList(SCOPES))
                 .setBackOff(new ExponentialBackOff());
+    }
+    */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.schedule_layout);
+
+        calendar = (CalendarView) findViewById(R.id.calendar);
+        calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
+                Toast.makeText(getApplicationContext(), (month+1) + "/" + day + "/" + year, Toast.LENGTH_LONG).show();
+            }
+        });
+
     }
 
 
