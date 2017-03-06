@@ -10,7 +10,7 @@ buildscript {
 }
 apply plugin: 'io.fabric'
 android {
-    compileSdkVersion 24
+    compileSdkVersion 25
     buildToolsVersion "24.0.3"
     defaultConfig {
         applicationId "com.example.quypng.csub"
