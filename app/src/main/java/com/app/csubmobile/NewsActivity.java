@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -53,7 +54,7 @@ public class NewsActivity extends AppCompatActivity
         backtotop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listview.smoothScrollToPosition(0,0);
+                listview.smoothScrollToPosition(0, 0);
                 //listview.smoothScrollBy(0, 0);
                 //listview.setSelection(0);
             }
@@ -151,6 +152,13 @@ public class NewsActivity extends AppCompatActivity
             // Launching Blackboard/Moodle
             Intent i = new Intent(getApplicationContext(), Blackboard_MoodleActivity.class);
             startActivity(i);
+        } else if (id == R.id.nav_about) {
+            // Launching About Simple Dialog
+            new AlertDialog.Builder(this)
+                    .setTitle("About CSUB TEAM")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

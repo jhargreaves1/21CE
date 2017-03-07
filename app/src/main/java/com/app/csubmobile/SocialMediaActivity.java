@@ -9,6 +9,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -97,6 +98,7 @@ public class SocialMediaActivity extends AppCompatActivity
             public void onScrollStateChanged(AbsListView view, int scrollState) {
                 // TODO Auto-generated method stub
             }
+
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 if (firstVisibleItem == 0) {
@@ -111,8 +113,8 @@ public class SocialMediaActivity extends AppCompatActivity
                         return;
 
                     }
-                } else if (totalItemCount - visibleItemCount == firstVisibleItem){
-                    View v =  listView.getChildAt(totalItemCount-1);
+                } else if (totalItemCount - visibleItemCount == firstVisibleItem) {
+                    View v = listView.getChildAt(totalItemCount - 1);
                     int offset = (v == null) ? 0 : v.getTop();
                     if (offset == 0) {
                         // reached the top:
@@ -131,7 +133,7 @@ public class SocialMediaActivity extends AppCompatActivity
                 .build();
 
         // Toolbar menu and navigation stuffs
-        ViewGroup header = (ViewGroup)inflater.inflate(R.layout.socialmedia_header, listView, false);
+        ViewGroup header = (ViewGroup) inflater.inflate(R.layout.socialmedia_header, listView, false);
         listView.addHeaderView(header, null, false);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -221,7 +223,7 @@ public class SocialMediaActivity extends AppCompatActivity
                 JSONObject feedObj = (JSONObject) feedArray.get(i);
 
                 FeedItem item = new FeedItem();
-                item.setId(i+1);
+                item.setId(i + 1);
                 item.setName("csubakersfield");
 
                 // Image might be null sometimes
@@ -330,6 +332,13 @@ public class SocialMediaActivity extends AppCompatActivity
             // Launching Blackboard/Moodle
             Intent i = new Intent(getApplicationContext(), Blackboard_MoodleActivity.class);
             startActivity(i);
+        } else if (id == R.id.nav_about) {
+            // Launching About Simple Dialog
+            new AlertDialog.Builder(this)
+                    .setTitle("About CSUB TEAM")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

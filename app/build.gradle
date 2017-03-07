@@ -28,8 +28,8 @@ android {
         }
     }
     sourceSets {
-        main{
-            res{
+        main {
+            res {
                 srcDir 'src/main/buildings'
             }
         }
@@ -49,7 +49,6 @@ repositories {
 
 dependencies {
     compile 'com.github.clans:fab:1.6.4'
-
     compile 'com.android.support:multidex:1.0.0'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -60,7 +59,7 @@ dependencies {
     compile 'com.android.support:design:25.0.1'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     compile 'org.osmdroid:osmdroid-android:5.5:release@aar'
-    compile ('com.google.android.gms:play-services-maps:8.3.0') {
+    compile('com.google.android.gms:play-services-maps:8.3.0') {
         exclude group: 'com.google.guava'
     }
     //compile 'com.google.firebase:firebase-appindexing:10.0.0'
@@ -72,7 +71,6 @@ dependencies {
         transitive = true;
     }
     compile 'org.jsoup:jsoup:1.10.2'
-
     compile 'pub.devrel:easypermissions:0.2.1'
     compile('com.google.api-client:google-api-client-android:1.22.0') {
         exclude group: 'org.apache.httpcomponents'
@@ -82,8 +80,6 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
         exclude group: 'com.google.guava'
     }
-
     compile 'com.lapism:searchview:4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
-
 }

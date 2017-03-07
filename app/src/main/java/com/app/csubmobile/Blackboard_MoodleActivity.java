@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -142,6 +143,13 @@ public class Blackboard_MoodleActivity extends AppCompatActivity
             // Launching Blackboard/Moodle
             Intent i = new Intent(getApplicationContext(), Blackboard_MoodleActivity.class);
             startActivity(i);
+        } else if (id == R.id.nav_about) {
+            // Launching About Simple Dialog
+            new AlertDialog.Builder(this)
+                    .setTitle("About CSUB TEAM")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
