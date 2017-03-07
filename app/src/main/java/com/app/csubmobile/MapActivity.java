@@ -16,7 +16,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.NavUtils;
@@ -43,6 +42,7 @@ import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerView;
 import com.mapbox.mapboxsdk.annotations.MarkerViewOptions;
+import com.mapbox.mapboxsdk.annotations.PolygonOptions;
 import com.mapbox.mapboxsdk.annotations.PolylineOptions;
 import com.mapbox.mapboxsdk.camera.CameraPosition;
 import com.mapbox.mapboxsdk.camera.CameraUpdateFactory;
@@ -67,8 +67,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,36 +75,38 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import com.mapbox.mapboxsdk.annotations.PolygonOptions;
-
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    DrawerLayout drawer;
+    private DrawerLayout drawer;
     private static final String TAG = "MapActivity";
     private DirectionsRoute currentRoute;
     private MapboxDirections client;
     private MapView mapView;
     private MapboxMap map;
-    private FloatingActionButton floatingActionButton, searchActionButton;
+    private com.github.clans.fab.FloatingActionButton getDirectionActionButton, searchActionButton, showMarkersActionButton;
     private LocationServices locationServices;
     private static final int PERMISSIONS_LOCATION = 0;
     private Position origin;
     private Position destination;
     private LocationManager locationManager;
-    public Criteria criteria;
-    public String bestProvider;
     private PolylineOptions newroute;
     private DrawerLayout mDrawerLayout;
     private Intent i;
-    public List<BuildingItem> buildings = new ArrayList<BuildingItem>();
-    MarkerView clickedMarker;
     private BuildingItem selectedBuilding;
-    public List<LatLng> polygon;
+    private List<BuildingItem> buildings = new ArrayList<BuildingItem>();
+    private List<LatLng> polygon;
+    private Criteria criteria;
+    private String bestProvider;
+    private MarkerView clickedMarker;
+    private Boolean markersOn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         polygon = new ArrayList<LatLng>();
+        markersOn = false;
+
+        // Checking for extra contents
         i = getIntent();
         selectedBuilding = (BuildingItem) i.getSerializableExtra("Building");
 
@@ -119,7 +119,13 @@ public class MapActivity extends AppCompatActivity
 
         locationServices = LocationServices.getLocationServices(MapActivity.this);
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-        searchActionButton = (FloatingActionButton) findViewById(R.id.search_toggle_fab);
+
+
+        // FAB button instantiation
+        getDirectionActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.getDirectionBtn);
+        searchActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.searchBtn);
+        showMarkersActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.showMarkersBtn);
+
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
 
@@ -135,15 +141,7 @@ public class MapActivity extends AppCompatActivity
                 // if this is launched from search activity then we get the selected building that
                 // user searched
                 if (selectedBuilding != null) {
-                    Marker selected = mapboxMap.addMarker(new MarkerViewOptions()
-                            .position(new LatLng(selectedBuilding.getLng(), selectedBuilding.getLat()))
-                            .title(selectedBuilding.getName())
-                            .snippet(selectedBuilding.getName())
-                            .visible(true));
-                    // set selected building as destination
-                    destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
-                    // center to that marker
-                    centerCamera(selected);
+                    new ShowSelectedBuildingMarker().execute();
                 }
                 /*
                 // University Advancement #7
@@ -503,9 +501,7 @@ public class MapActivity extends AppCompatActivity
 
                 });
 
-
-                floatingActionButton = (FloatingActionButton) findViewById(R.id.location_toggle_fab);
-                floatingActionButton.setOnClickListener(new View.OnClickListener() {
+                getDirectionActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (map != null) {
@@ -531,26 +527,26 @@ public class MapActivity extends AppCompatActivity
                             }
                         }
 
-                        // intent to launch building list
-                        /*Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
-                        i.putExtra("Buildings", (Serializable) buildings);
-                        startActivity(i);*/
                     }
                 });
                 searchActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (map != null) {
+                        /*if (map != null) {
                             Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
                             i.putExtra("Buildings", (Serializable) buildings);
                             startActivity(i);
                             finish();
-                        }
+                        }*/
+                    }
+                });
 
-                        // intent to launch building list
-                        /*Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
-                        i.putExtra("Buildings", (Serializable) buildings);
-                        startActivity(i);*/
+                showMarkersActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        /*if (map != null) {
+                            new ShowAllMarkers().execute();
+                        }*/
                     }
                 });
             }
@@ -578,6 +574,56 @@ public class MapActivity extends AppCompatActivity
             mapboxMap.addPolygon(new PolygonOptions()
                     .addAll(polygon.get(i))
                     .fillColor(Color.parseColor("#3bb2d0")));
+        }
+    }
+
+    private class ShowAllMarkers extends AsyncTask<Void,Void,List<LatLng>> {
+
+        @Override
+        protected void onPostExecute(List<LatLng> points) {
+            if (buildings.size() > 0 && markersOn == false) {
+                for (int i = 0; i < buildings.size(); i++) {
+                    map.addMarker(new MarkerViewOptions()
+                            .position(new LatLng(buildings.get(i).getLng(), buildings.get(i).getLat()))
+                            .title(buildings.get(i).getName())
+                            .snippet(buildings.get(i).getName())
+                            .visible(true));
+                }
+                markersOn = true;
+                map.resetNorth();
+            } else if (markersOn == true) {
+                List<Marker> markers = map.getMarkers();
+                for (int i = 0; i < markers.size(); i++) {
+                    map.removeMarker(markers.get(i));
+                }
+                markersOn = false;
+            }
+        }
+
+        @Override
+        protected List<LatLng> doInBackground(Void... voids) {
+            return null;
+        }
+    }
+
+    private class ShowSelectedBuildingMarker extends AsyncTask<Void,Void,List<LatLng>> {
+
+        @Override
+        protected void onPostExecute(List<LatLng> points) {
+            Marker selected = map.addMarker(new MarkerViewOptions()
+                    .position(new LatLng(selectedBuilding.getLng(), selectedBuilding.getLat()))
+                    .title(selectedBuilding.getName())
+                    .snippet(selectedBuilding.getName())
+                    .visible(true));
+            // set selected building as destination
+            destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
+            // center to that marker
+            centerCamera(selected);
+        }
+
+        @Override
+        protected List<LatLng> doInBackground(Void... voids) {
+            return null;
         }
     }
 
@@ -670,18 +716,6 @@ public class MapActivity extends AppCompatActivity
                             .visible(false));
                 }
             }*/
-        }
-    }
-
-    private void showAllMarkers() {
-        if (buildings.size() > 0) {
-            for (int i = 0; i < buildings.size(); i++) {
-                Marker marker = map.addMarker(new MarkerViewOptions()
-                        .position(new LatLng(buildings.get(i).getLng(), buildings.get(i).getLat()))
-                        .title(buildings.get(i).getName())
-                        .snippet(buildings.get(i).getName())
-                        .visible(true));
-            }
         }
     }
 
@@ -992,9 +1026,9 @@ public class MapActivity extends AppCompatActivity
                     }
                 }
             });
-            floatingActionButton.setImageResource(R.drawable.ic_menu_mylocation);
+            getDirectionActionButton.setImageResource(R.drawable.ic_menu_mylocation);
         } else {
-            floatingActionButton.setImageResource(R.drawable.ic_menu_mylocation);
+            getDirectionActionButton.setImageResource(R.drawable.ic_menu_mylocation);
         }
         // Enable or disable the location layer on the map
         map.setMyLocationEnabled(enabled);

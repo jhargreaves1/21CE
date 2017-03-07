@@ -25,26 +25,6 @@
         mapbox:style_url="@string/my_style_mapbox"
         mapbox:zoom="16" >
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/location_toggle_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_menu_mylocation"
-            app:backgroundTint="@color/colorAccent"
-            android:layout_gravity="start"/>
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/search_toggle_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:visibility="visible"
-            app:srcCompat="@drawable/ic_search_black_24dp"
-            app:backgroundTint="@color/colorAccent"
-            android:layout_gravity="start|bottom"/>
-
         <com.github.clans.fab.FloatingActionMenu
             android:id="@+id/menu_red"
             android:layout_width="match_parent"
