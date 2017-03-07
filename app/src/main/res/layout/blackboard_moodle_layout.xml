@@ -34,7 +34,6 @@
         android:layout_gravity="end"
         android:layout_marginTop="?attr/actionBarSize"
         android:fitsSystemWindows="false"
-        app:headerLayout="@layout/nav_header_news"
         app:menu="@menu/activity_news_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
