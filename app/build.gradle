@@ -11,9 +11,9 @@ buildscript {
 apply plugin: 'io.fabric'
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId "com.example.quypng.csub"
+        applicationId "com.app.csubmobile"
         minSdkVersion 19
         targetSdkVersion 24
         versionCode 1

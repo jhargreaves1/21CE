@@ -68,6 +68,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +77,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-// Show direction on map
-
+import com.mapbox.mapboxsdk.annotations.PolygonOptions;
 
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -102,9 +102,11 @@ public class MapActivity extends AppCompatActivity
     public List<BuildingItem> buildings = new ArrayList<BuildingItem>();
     MarkerView clickedMarker;
     private BuildingItem selectedBuilding;
+    public List<LatLng> polygon;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        polygon = new ArrayList<LatLng>();
         i = getIntent();
         selectedBuilding = (BuildingItem) i.getSerializableExtra("Building");
 
@@ -120,8 +122,6 @@ public class MapActivity extends AppCompatActivity
         searchActionButton = (FloatingActionButton) findViewById(R.id.search_toggle_fab);
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
-
-
 
         // Create a mapView
         mapView = (MapView) findViewById(R.id.mapview);
@@ -141,7 +141,7 @@ public class MapActivity extends AppCompatActivity
                             .snippet(selectedBuilding.getName())
                             .visible(true));
                     // set selected building as destination
-                    destination = Position.fromCoordinates(selected.getPosition().getLongitude(),selected.getPosition().getLatitude());
+                    destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
                     // center to that marker
                     centerCamera(selected);
                 }
@@ -181,7 +181,7 @@ public class MapActivity extends AppCompatActivity
                         clickedMarker.setVisible(true);
 
                         // set destination to marker clicked and center
-                        destination = Position.fromCoordinates(marker.getPosition().getLongitude(),marker.getPosition().getLatitude());
+                        destination = Position.fromCoordinates(marker.getPosition().getLongitude(), marker.getPosition().getLatitude());
                         centerCamera(marker);
 
                         switch (marker.getTitle()) {
@@ -501,7 +501,6 @@ public class MapActivity extends AppCompatActivity
                     }
 
 
-
                 });
 
 
@@ -511,10 +510,10 @@ public class MapActivity extends AppCompatActivity
                     public void onClick(View view) {
                         if (map != null) {
                             toggleGps(!map.isMyLocationEnabled());
-                            if(map.getMyLocation() != null) {
+                            if (map.getMyLocation() != null) {
                                 // Set the origin as user location only if we can get their location
                                 origin = Position.fromCoordinates(map.getMyLocation().getLongitude(), map.getMyLocation().getLatitude());
-                            }else{
+                            } else {
                                 return;
                             }
 
@@ -574,10 +573,22 @@ public class MapActivity extends AppCompatActivity
 
     }
 
+    private void drawPolygon(MapboxMap mapboxMap, ArrayList<ArrayList<LatLng>> polygon) {
+        for (int i = 0; i < polygon.size(); i++) {
+            mapboxMap.addPolygon(new PolygonOptions()
+                    .addAll(polygon.get(i))
+                    .fillColor(Color.parseColor("#3bb2d0")));
+        }
+    }
+
     private class ParseCSUBGeoJson extends AsyncTask<Void, Void, List<LatLng>> {
 
         ArrayList<String> titles = new ArrayList<>();
         ArrayList<LatLng> markers = new ArrayList<>();
+        ArrayList<ArrayList<LatLng>> polyTemp = new ArrayList<ArrayList<LatLng>>();
+        List<Double> Lng = new ArrayList<>();
+        List<Double> Lat = new ArrayList<>();
+
         @Override
         protected List<LatLng> doInBackground(Void... voids) {
             try {
@@ -610,8 +621,27 @@ public class MapActivity extends AppCompatActivity
                                 double lat = coords.getDouble(0);
                                 LatLng latLng = new LatLng(coords.getDouble(1), coords.getDouble(0));
                                 markers.add(latLng);
-                                buildings.add(new BuildingItem(title,title,lng,lat));
+                                buildings.add(new BuildingItem(title, title, lng, lat));
                                 titles.add(title);
+                            }
+                        }
+
+                        // Checking for polygon coordinates
+                        if (!TextUtils.isEmpty(type) && type.equalsIgnoreCase("Polygon")) {
+                            JSONArray coord1 = geometry.getJSONArray("coordinates");
+                            for (int j = 0; j < coord1.length(); j++) {
+                                ArrayList<LatLng> inner = new ArrayList<LatLng>();
+                                JSONArray coord2 = coord1.getJSONArray(j);
+                                for (int k = 0; k < coord2.length(); k++) {
+                                    JSONArray coord3 = coord2.getJSONArray(k);
+                                    double lng = coord3.getDouble(1);
+                                    double lat = coord3.getDouble(0);
+                                    Lng.add(lng);
+                                    Lat.add(lat);
+                                    LatLng latLng = new LatLng(lng, lat);
+                                    inner.add(new LatLng(lng, lat));
+                                }
+                                polyTemp.add(inner);
                             }
                         }
                     }
@@ -626,6 +656,7 @@ public class MapActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(List<LatLng> points) {
             super.onPostExecute(points);
+            drawPolygon(map, polyTemp);
             /*map.addMarker(new MarkerOptions()
                     .position(new LatLng(35.349827, -119.101502))
                     .title("Student Union")
@@ -642,7 +673,7 @@ public class MapActivity extends AppCompatActivity
         }
     }
 
-    private void showAllMarkers () {
+    private void showAllMarkers() {
         if (buildings.size() > 0) {
             for (int i = 0; i < buildings.size(); i++) {
                 Marker marker = map.addMarker(new MarkerViewOptions()
@@ -654,7 +685,7 @@ public class MapActivity extends AppCompatActivity
         }
     }
 
-    private void centerCamera (Marker marker) {
+    private void centerCamera(Marker marker) {
         CameraPosition position = (new CameraPosition.Builder()
                 .target(marker.getPosition())
                 .tilt(30)
@@ -667,9 +698,9 @@ public class MapActivity extends AppCompatActivity
         GradientDrawable border = new GradientDrawable();
         border.setColor(0xFFFFFFFF); //white bg
         border.setStroke(3, 0xFF000000); //black border
-        border.setCornerRadii(new float[] { 8, 8, 8, 8, 8, 8, 8, 8 }); // rounded corner
+        border.setCornerRadii(new float[]{8, 8, 8, 8, 8, 8, 8, 8}); // rounded corner
 
-        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
             // deprecated but just in case user runs sdk lower than jellybean
             parent.setBackgroundDrawable(border);
         } else {
