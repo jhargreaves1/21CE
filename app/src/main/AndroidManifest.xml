@@ -1,95 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.app.csubmobile">
+    package="com.app.csubmobile">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
-    <uses-feature android:name="android.hardware.location.gps"/>
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
-        android:name="com.app.csubmobile.appcontroller.AppController"
+        android:name=".appcontroller.AppController"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.app.csubmobile.Splashscreen">
+        <activity android:name=".Splashscreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.csubmobile.MainActivity"
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.app.csubmobile.MapActivity"
+            android:name=".MapActivity"
             android:label="@string/title_activity_map"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.NewsActivity"
+            android:name=".NewsActivity"
             android:label="@string/title_activity_news"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.EventsActivity"
+            android:name=".EventsActivity"
             android:label="@string/title_activity_events"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.BuildingsActivity"
+            android:name=".BuildingsActivity"
             android:label="@string/title_activity_events"
-            android:parentActivityName="com.app.csubmobile.MapActivity" />
+            android:parentActivityName=".MapActivity" />
         <activity
-            android:name="com.app.csubmobile.DirectoryActivity"
+            android:name=".DirectoryActivity"
             android:label="@string/title_activity_directory"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.SocialMediaActivity"
+            android:name=".SocialMediaActivity"
             android:label="@string/title_activity_socialmedia"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.DiningActivity"
+            android:name=".DiningActivity"
             android:label="@string/title_activity_dining"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.TransportationActivity"
+            android:name=".TransportationActivity"
             android:label="@string/title_activity_transportation"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.ScheduleActivity"
+            android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.Blackboard_MoodleActivity"
+            android:name=".Blackboard_MoodleActivity"
             android:label="@string/title_activity_moodle"
-            android:parentActivityName="com.app.csubmobile.MainActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
-            android:name="com.app.csubmobile.SingleNewsView"
+            android:name=".SingleNewsView"
             android:label="@string/title_activity_news"
-            android:parentActivityName="com.app.csubmobile.NewsActivity" />
-
+            android:parentActivityName=".NewsActivity" />
         // telemetry service for MapBox
-        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+            android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="96d760b7256c80059e6f4776e79e703a26ae5106" />
 
+        <activity
+            android:name=".ListBuildings"
+            android:label="@string/title_activity_list_buildings"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

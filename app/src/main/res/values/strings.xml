@@ -39,4 +39,5 @@
 
     <string name="sci3_des">Science III</string>
     <string name="placeholder_search">"Search..."</string>
+    <string name="title_activity_list_buildings">ListBuildings</string>
 </resources>
