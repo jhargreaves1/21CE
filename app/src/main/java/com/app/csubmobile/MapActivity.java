@@ -68,6 +68,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,7 +86,7 @@ public class MapActivity extends AppCompatActivity
     private MapboxDirections client;
     private MapView mapView;
     private MapboxMap map;
-    private com.github.clans.fab.FloatingActionButton getDirectionActionButton, searchActionButton, showMarkersActionButton;
+    private com.github.clans.fab.FloatingActionButton getDirectionActionButton, searchActionButton, showMarkersActionButton, buildingActionButton;
     private LocationServices locationServices;
     private static final int PERMISSIONS_LOCATION = 0;
     private Position origin;
@@ -126,6 +127,7 @@ public class MapActivity extends AppCompatActivity
         getDirectionActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.getDirectionBtn);
         searchActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.searchBtn);
         showMarkersActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.showMarkersBtn);
+        buildingActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.buildingListBtn);
 
         criteria = new Criteria();
         bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
@@ -533,12 +535,12 @@ public class MapActivity extends AppCompatActivity
                 searchActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        /*if (map != null) {
+                        if (map != null) {
                             Intent i = new Intent(getApplicationContext(), BuildingsActivity.class);
                             i.putExtra("Buildings", (Serializable) buildings);
                             startActivity(i);
                             finish();
-                        }*/
+                        }
                     }
                 });
 
@@ -550,6 +552,19 @@ public class MapActivity extends AppCompatActivity
                         }*/
                     }
                 });
+
+                buildingActionButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (map != null) {
+                            Intent i = new Intent(getApplicationContext(), ListBuildings.class);
+                            i.putExtra("Buildings", (Serializable) buildings);
+                            startActivity(i);
+                            finish();
+                        }
+                    }
+                });
+
             }
         });
         // runtime permission check~~~~~~
