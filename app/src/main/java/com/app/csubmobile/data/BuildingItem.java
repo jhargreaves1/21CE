@@ -4,9 +4,11 @@ package com.app.csubmobile.data;
  * Created by Jonathan on 2/19/2017.
  */
 
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 
-public class BuildingItem implements Serializable {
+public class BuildingItem implements Serializable, Comparable<BuildingItem> {
     public String buildingName;
     public double lng;
     public double lat;
@@ -20,14 +22,6 @@ public class BuildingItem implements Serializable {
         super();
         this.buildingName = buildingName;
         this.lng = lng;
-        this.lat = lat;
-        this.buildingAbbrev = buildingAbbrev;
-    }
-
-    public BuildingItem(String buildingName, String buildingAbbrev, double lat) {
-        super();
-        this.buildingName = buildingName;
-
         this.lat = lat;
         this.buildingAbbrev = buildingAbbrev;
     }
@@ -61,5 +55,10 @@ public class BuildingItem implements Serializable {
         return this.buildingAbbrev;
     }
 
-
+    public int compareTo(BuildingItem o) {
+        if(this.buildingName != null && o.buildingName != null){
+            return this.buildingName.compareToIgnoreCase(o.buildingName);
+        }
+        return 0;
+    }
 }
