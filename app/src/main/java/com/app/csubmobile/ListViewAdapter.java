@@ -51,9 +51,9 @@ public class ListViewAdapter extends BaseAdapter {
         View itemView = inflater.inflate(R.layout.news_listview_item, parent, false);
         resultp = data.get(position);
         title = (TextView) itemView.findViewById(R.id.title);
-        link = (TextView) itemView.findViewById(R.id.link);
+        //link = (TextView) itemView.findViewById(R.id.link);
         title.setText(resultp.get(NewsActivity.TITLE));
-        link.setText(resultp.get(NewsActivity.LINK));
+        //link.setText(resultp.get(NewsActivity.LINK));
         itemView.setOnClickListener(new OnClickListener() {
 
             @Override

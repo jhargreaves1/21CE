@@ -1,5 +1,6 @@
 package com.app.csubmobile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
@@ -13,10 +14,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class EventsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
+
+    ListView listview;
+    ListViewAdapter adapter;
+    ProgressDialog mProgressDialog;
+    ArrayList<HashMap<String, String>> arraylist;
+    static String TITLE = "title";
+    static String LINK = "link";
+    // URL Address
+    String url = "http://www.csub.edu/news/news_archives/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

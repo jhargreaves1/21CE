@@ -1,40 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_height="fill_parent"
+    tools:layout_editor_absoluteY="25dp"
+    tools:layout_editor_absoluteX="0dp">
 
     <ImageView
-        android:id="@+id/flag"
+        android:id="@+id/newsLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
         android:background="#000000"
-        android:src="@drawable/csub_logo9" />
+        android:src="@drawable/csub_logo9"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="8dp" />
 
     <TextView
         android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/newsLogo"
+        android:layout_marginStart="14dp"
+        android:layout_toEndOf="@+id/newsLogo"
+        android:ellipsize="end"
+        android:maxLines="4"
+        android:padding="5dp"
+        android:textAllCaps="true"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginTop="8dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/imageView2"
+        android:layout_marginRight="8dp"
+        app:layout_constraintLeft_toRightOf="@+id/newsLogo"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:textStyle="normal|bold"/>
+
+    <ImageView
+        android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/flag"
-        android:layout_marginStart="13dp"
-        android:layout_toEndOf="@+id/flag"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:padding="10dp"
-        android:textAllCaps="true" />
+        android:layout_marginEnd="16dp"
+        app:srcCompat="@drawable/ic_keyboard_arrow_right_black_24dp"
+        android:layout_alignBottom="@+id/newsLogo"
+        android:layout_alignParentEnd="true"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="56dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/flag"
-        android:layout_alignStart="@+id/title"
-        android:ellipsize="end"
-        android:maxLines="1"
-        android:padding="10dp"
-        android:textAllCaps="true" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
