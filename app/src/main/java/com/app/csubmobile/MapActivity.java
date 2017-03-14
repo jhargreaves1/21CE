@@ -188,7 +188,7 @@ public class MapActivity extends AppCompatActivity
                         switch (marker.getTitle()) {
                             case "Well Core Repository":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.well_core));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Facilities/Corporation Yard":
@@ -198,7 +198,7 @@ public class MapActivity extends AppCompatActivity
                                 break;
                             case "Emergency Operation Center":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.facilities));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Modular East I":
@@ -243,7 +243,7 @@ public class MapActivity extends AppCompatActivity
                                 break;
                             case "Lorien Hall":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.lorien));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Child Care":
@@ -253,12 +253,12 @@ public class MapActivity extends AppCompatActivity
                                 break;
                             case "Tennis Shower Locker":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.tennis_shower_locker));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Rowdy":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.student_union));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Amphitheatre":
@@ -278,7 +278,7 @@ public class MapActivity extends AppCompatActivity
                                 break;
                             case "University Grill":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.university_grill));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Doré Theatre":
@@ -293,7 +293,7 @@ public class MapActivity extends AppCompatActivity
                                 break;
                             case "J.R. Hillman Aquatic Center":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
-                                        MapActivity.this, R.drawable.coming_soon));
+                                        MapActivity.this, R.drawable.swimming_pool));
                                 description.setText(marker.getSnippet());
                                 break;
                             case "Handball Courts":

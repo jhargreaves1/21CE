@@ -43,7 +43,7 @@ class TransViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Declare Variables
         TextView bus;
-        TextView info;
+        //TextView info;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);

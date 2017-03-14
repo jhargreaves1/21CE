@@ -27,14 +27,14 @@ public class RouteView extends AppCompatActivity
     DrawerLayout drawer;
 
     TextView routeTitle;
-    TextView newsContent;
-    TextView newsDate;
+    //TextView newsContent;
+    //TextView newsDate;
     ProgressDialog mProgressDialog;
 
-    String csubSite = "https://www.getbus.org/maps-and-timetables/";
+    String url = "https://www.getbus.org/maps-and-timetables/";
     String title;
-    String link;
-    String url;
+    //String link;
+    //String url;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,10 +44,10 @@ public class RouteView extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Intent i = getIntent();
-        title = i.getStringExtra("title");
-        link = i.getStringExtra("link");
+        title = i.getStringExtra("bus");
+        //link = i.getStringExtra("link");
         //link = link.replaceAll("\\s+","%20");
-        url = csubSite + link;
+        //url = GETSite + link;
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
         txtTitle.setText(title);
@@ -159,7 +159,7 @@ public class RouteView extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(RouteView.this);
-            mProgressDialog.setTitle("Retrieving news content...\"");
+            mProgressDialog.setTitle("Retrieving content...\"");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
@@ -202,10 +202,10 @@ public class RouteView extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Void result) {
-            newsContent = (TextView) findViewById(R.id.contentView);
-            newsContent.setText(articleContent);
-            newsDate = (TextView) findViewById(R.id.newsDate);
-            newsDate.setText(articleDate);
+            //newsContent = (TextView) findViewById(R.id.contentView);
+            //newsContent.setText(articleContent);
+            //newsDate = (TextView) findViewById(R.id.newsDate);
+           // newsDate.setText(articleDate);
             mProgressDialog.dismiss();
         }
     }
