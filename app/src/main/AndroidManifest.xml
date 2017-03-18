@@ -68,6 +68,10 @@
             android:label="@string/title_activity_transportation"
             android:parentActivityName=".MainActivity" />
         <activity
+            android:name=".RouteView"
+            android:label="@string/title_activity_transportation"
+            android:parentActivityName=".TransportationActivity" />
+        <activity
             android:name=".ScheduleActivity"
             android:label="@string/title_activity_schedule"
             android:parentActivityName=".MainActivity" />

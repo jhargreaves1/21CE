@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -27,14 +28,14 @@ public class RouteView extends AppCompatActivity
     DrawerLayout drawer;
 
     TextView routeTitle;
-    //TextView newsContent;
+    TextView routeinfo;
     //TextView newsDate;
     ProgressDialog mProgressDialog;
 
-    String url = "https://www.getbus.org/maps-and-timetables/";
+    String GETsite = "https://www.getbus.org/maps-and-timetables/";
     String title;
-    //String link;
-    //String url;
+    String link;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,9 +46,9 @@ public class RouteView extends AppCompatActivity
 
         Intent i = getIntent();
         title = i.getStringExtra("bus");
-        //link = i.getStringExtra("link");
-        //link = link.replaceAll("\\s+","%20");
-        //url = GETSite + link;
+        link = i.getStringExtra("link");
+        link = link.replaceAll("\\s+", "%20");
+        GETsite = GETsite + link;
 
         TextView txtTitle = (TextView) findViewById(R.id.title);
         txtTitle.setText(title);
@@ -62,8 +63,12 @@ public class RouteView extends AppCompatActivity
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(false);
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        //NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        //navigationView.setNavigationItemSelectedListener(this);
+        WebView pdfview = (WebView) findViewById(R.id.pdfview);
+        pdfview.getSettings().setJavaScriptEnabled(true);
+        String pdf = link;
+        pdfview.loadUrl("http://drive.google.com/viewerng/viewer?embedded=true&url=" + pdf);
     }
 
     @Override
@@ -171,11 +176,12 @@ public class RouteView extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
+            /*
             try {
                 // Connect to the Website URL
-                Document doc = Jsoup.connect(url).get();
-                for (Element div : doc.select("div[class=article_text]")) {
-                    for (Element header1 : div.select("h1")) {
+                Document doc = Jsoup.connect(GETsite).get();
+                for (Element div : doc.select("section[class=page-section white]")) {
+                    for (Element header1 : div.select("a")) {
                         articleTitle = header1.text();
                     }
                     // check if div element has its own text
@@ -196,17 +202,21 @@ public class RouteView extends AppCompatActivity
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-
+        */
             return null;
         }
 
         @Override
         protected void onPostExecute(Void result) {
-            //newsContent = (TextView) findViewById(R.id.contentView);
-            //newsContent.setText(articleContent);
+            /*
+            routeinfo = (TextView) findViewById(R.id.contentView);
+            routeinfo.setText(articleContent);
             //newsDate = (TextView) findViewById(R.id.newsDate);
            // newsDate.setText(articleDate);
+           */
             mProgressDialog.dismiss();
         }
+
+        }
+
     }
-}

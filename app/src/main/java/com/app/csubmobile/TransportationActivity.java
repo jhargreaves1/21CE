@@ -34,7 +34,8 @@ public class TransportationActivity extends AppCompatActivity
     ListView listview;
     TransViewAdapter adapter;
     ProgressDialog mProgressDialog;
-    ArrayList<HashMap<String, String>> arraylist;
+    ArrayList<HashMap<String, String>> routelist;
+    ArrayList<HashMap<String,String>> urlList;
     static String TITLE = "title";
     static String LINK = "link";
     // URL Address
@@ -173,7 +174,7 @@ public class TransportationActivity extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(TransportationActivity.this);
-            mProgressDialog.setTitle("Retrieving tranportation content...");
+            mProgressDialog.setTitle("Retrieving Tranportation content...");
             mProgressDialog.setMessage("Loading...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.show();
@@ -181,7 +182,8 @@ public class TransportationActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            arraylist = new ArrayList<>();
+            routelist = new ArrayList<>();
+            urlList = new ArrayList<>();
             try {
                 Document doc = Jsoup.connect(url).get();
                 //for (Element div : doc.select("div[class=article_text]")) {
@@ -189,10 +191,18 @@ public class TransportationActivity extends AppCompatActivity
                     for (Element row : div.select("h3")) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("title", row.text());
-                        //map.put("link", row.attr("</a>"));
-                        arraylist.add(map);
+                        routelist.add(map);
                     }
                 }
+
+                for (Element div : doc.select("section[class=page-section white]")) {
+                    for (Element row : div.select("a")) {
+                        HashMap<String, String> map = new HashMap<>();
+                        map.put("link", row.attr("href"));
+                        urlList.add(map);
+                    }
+                }
+
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -203,7 +213,7 @@ public class TransportationActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Void result) {
             listview = (ListView) findViewById(R.id.trans_list);
-            adapter = new TransViewAdapter(TransportationActivity.this, arraylist);
+            adapter = new TransViewAdapter(TransportationActivity.this, routelist, urlList);
             listview.setAdapter(adapter);
             mProgressDialog.dismiss();
         }

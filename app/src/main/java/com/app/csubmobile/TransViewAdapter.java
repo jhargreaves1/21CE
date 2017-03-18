@@ -16,18 +16,23 @@ class TransViewAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
-    ArrayList<HashMap<String, String>> data;
-    HashMap<String, String> resultp = new HashMap< >();
+    ArrayList<HashMap<String, String>> routes;
+    ArrayList<HashMap<String, String>> links;
+    HashMap<String, String> result_r = new HashMap< >();
+    HashMap<String, String> result_l = new HashMap< >();
 
     public TransViewAdapter(Context context,
-                            ArrayList<HashMap<String, String>> arraylist) {
+                            ArrayList<HashMap<String, String>> routelist,
+                            ArrayList<HashMap<String, String>> urlList
+                            ) {
         this.context = context;
-        data = arraylist;
+        routes = routelist;
+        links = urlList;
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return routes.size();
     }
 
     @Override
@@ -43,25 +48,26 @@ class TransViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Declare Variables
         TextView bus;
-        //TextView info;
+        TextView link;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.trans_listview_item, parent, false);
-        resultp = data.get(position);
-        bus = (TextView) itemView.findViewById(R.id.route);
-        //info = (TextView) itemView.findViewById(R.id.routeinfo);
-        bus.setText(resultp.get(TransportationActivity.TITLE));
-        //info.setText(resultp.get(TransportationActivity.LINK));
+        result_r = routes.get(position);
+        result_l = links.get(position);
+        bus = (TextView) itemView.findViewById(R.id.title);
+        link = (TextView) itemView.findViewById(R.id.link);
+        bus.setText(result_r.get(TransportationActivity.TITLE));
+        link.setText(result_l.get(TransportationActivity.LINK));
         itemView.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                resultp = data.get(position);
+                result_r = routes.get(position);
                 Intent intent = new Intent(context, RouteView.class);
-                intent.putExtra("bus", resultp.get(TransportationActivity.TITLE));
-                //intent.putExtra("info", resultp.get(TransportationActivity.LINK));
+                intent.putExtra("bus", result_r.get(TransportationActivity.TITLE));
+                intent.putExtra("link", result_l.get(TransportationActivity.LINK));
                 context.startActivity(intent);
             }
         });
