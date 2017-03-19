@@ -38,10 +38,15 @@
             android:id="@+id/nav_blackboard"
             android:icon="@drawable/ic_menu_blackboard"
             android:title="Blackboard" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Slideshow" />
     </group>
 
     <item android:title="Settings">
         <menu>
+
             <item
                 android:id="@+id/nav_about"
                 android:icon="@drawable/ic_menu_share"

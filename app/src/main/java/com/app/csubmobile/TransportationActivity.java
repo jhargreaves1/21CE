@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
 
+import com.app.csubmobile.Volley.SlideShow;
+
 import java.util.ArrayList;
 import java.io.IOException;
 import java.util.HashMap;
@@ -162,6 +164,10 @@ public class TransportationActivity extends AppCompatActivity
                     .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
+        } else if(id == R.id.nav_slideshow){
+            // Launching Blackboard/Moodle
+            Intent i = new Intent(getApplicationContext(), SlideShow.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
