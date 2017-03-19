@@ -38,6 +38,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.app.csubmobile.Volley.SlideShow;
 import com.app.csubmobile.data.BuildingItem;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Marker;
@@ -1004,6 +1005,10 @@ public class MapActivity extends AppCompatActivity
                     .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
+        } else if(id == R.id.nav_slideshow){
+            // Launching Blackboard/Moodle
+            Intent i = new Intent(getApplicationContext(), SlideShow.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

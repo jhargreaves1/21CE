@@ -24,6 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.app.csubmobile.Volley.SlideShow;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -155,6 +156,10 @@ public class DirectoryActivity extends AppCompatActivity
                     .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
+        } else if(id == R.id.nav_slideshow){
+            // Launching Blackboard/Moodle
+            Intent i = new Intent(getApplicationContext(), SlideShow.class);
+            startActivity(i);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
