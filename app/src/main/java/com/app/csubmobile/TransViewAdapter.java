@@ -17,17 +17,20 @@ class TransViewAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> routes;
-    ArrayList<HashMap<String, String>> links;
+    //ArrayList<HashMap<String, String>> links;
+    ArrayList<String> links = new ArrayList<String>();
     HashMap<String, String> result_r = new HashMap< >();
-    HashMap<String, String> result_l = new HashMap< >();
+    //HashMap<String, String> result_l = new HashMap< >();
+    String result_l ;
 
     public TransViewAdapter(Context context,
                             ArrayList<HashMap<String, String>> routelist,
-                            ArrayList<HashMap<String, String>> urlList
+                            ArrayList<String> urlList
                             ) {
         this.context = context;
         routes = routelist;
         links = urlList;
+
     }
 
     @Override
@@ -59,7 +62,7 @@ class TransViewAdapter extends BaseAdapter {
         bus = (TextView) itemView.findViewById(R.id.title);
         link = (TextView) itemView.findViewById(R.id.link);
         bus.setText(result_r.get(TransportationActivity.TITLE));
-        link.setText(result_l.get(TransportationActivity.LINK));
+        link.setText(result_l);
         itemView.setOnClickListener(new OnClickListener() {
 
             @Override
@@ -67,7 +70,7 @@ class TransViewAdapter extends BaseAdapter {
                 result_r = routes.get(position);
                 Intent intent = new Intent(context, RouteView.class);
                 intent.putExtra("bus", result_r.get(TransportationActivity.TITLE));
-                intent.putExtra("link", result_l.get(TransportationActivity.LINK));
+                intent.putExtra("link", links.get(position));
                 context.startActivity(intent);
             }
         });

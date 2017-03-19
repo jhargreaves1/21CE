@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Gravity;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,7 +36,8 @@ public class TransportationActivity extends AppCompatActivity
     TransViewAdapter adapter;
     ProgressDialog mProgressDialog;
     ArrayList<HashMap<String, String>> routelist;
-    ArrayList<HashMap<String,String>> urlList;
+    //ArrayList<HashMap<String,String>> urlList;
+    ArrayList<String> urlList;
     static String TITLE = "title";
     static String LINK = "link";
     // URL Address
@@ -199,7 +201,8 @@ public class TransportationActivity extends AppCompatActivity
                     for (Element row : div.select("a")) {
                         HashMap<String, String> map = new HashMap<>();
                         map.put("link", row.attr("href"));
-                        urlList.add(map);
+                        urlList.add(row.attr("href"));
+                        Log.d("href", row.attr("href") + "\n");
                     }
                 }
 
