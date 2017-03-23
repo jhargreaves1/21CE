@@ -14,7 +14,7 @@ android {
     buildToolsVersion '25.0.0'
     defaultConfig {
         applicationId "com.app.csubmobile"
-        minSdkVersion 21
+        minSdkVersion 19
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -72,14 +72,14 @@ dependencies {
     }
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'pub.devrel:easypermissions:0.2.1'
-    compile('com.google.api-client:google-api-client-android:1.22.0') {
-        exclude group: 'org.apache.httpcomponents'
-        exclude group: 'com.google.guava'
-    }
-    compile('com.google.apis:google-api-services-calendar:v3-rev232-1.22.0') {
-        exclude group: 'org.apache.httpcomponents'
-        exclude group: 'com.google.guava'
-    }
+//    compile('com.google.api-client:google-api-client-android:1.22.0') {
+//        exclude group: 'org.apache.httpcomponents'
+//        exclude group: 'com.google.guava'
+//    }
+//    compile('com.google.apis:google-api-services-calendar:v3-rev232-1.22.0') {
+//        exclude group: 'org.apache.httpcomponents'
+//        exclude group: 'com.google.guava'
+//    }
     compile 'com.lapism:searchview:4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
 }
