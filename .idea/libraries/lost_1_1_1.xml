@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="lost-1.1.1">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/708b35ef059d4eeaf2fd1d4e1509b4f009dc56db/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/708b35ef059d4eeaf2fd1d4e1509b4f009dc56db/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/172771c9e0f5fab131e476ca3ebfaa794d0a71d6/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/172771c9e0f5fab131e476ca3ebfaa794d0a71d6/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
