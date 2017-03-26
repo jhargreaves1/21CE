@@ -1,72 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="2.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="end">
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/ripple_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"
+        android:background="@color/CSUB_BLUE"
+        android:padding="6dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toTopOf="@+id/slide_caption"
+        app:srcCompat="@drawable/pond_a"
+        tools:layout_editor_absoluteX="8dp" />
+
+    <TextView
+        android:id="@+id/slide_caption"
+        android:layout_width="match_parent"
+        android:layout_height="91dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/CSUB_GOLD"
+        android:textColor="@color/CSUB_BLUE"
+        android:textSize="32sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="8dp" />
 
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-        <ViewFlipper
-            android:id="@+id/bckgrndViewFlipper1"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+        android:layout_width="600dp"
+        android:layout_height="557dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/ripple"
+        android:clickable="true"
+        android:weightSum="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="395dp">
 
-            <ImageView
-                android:id="@+id/bckgrndImageView6"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/admin_west_b" />
 
-            <ImageView
-                android:id="@+id/bckgrndImageView5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/ampitheatre" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView4"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/numenor_a" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView3"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/pond_a" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView2"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/peets" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView1"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/performingarts" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView8"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/admin_east" />
-
-            <ImageView
-                android:id="@+id/bckgrndImageView7"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="center"
-                android:src="@drawable/admin_west" />
-        </ViewFlipper>
     </LinearLayout>
-</RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/CSUB_GOLD"
+        android:clickable="true"
+        android:focusable="true"
+        android:foreground="@drawable/ripple"
+        tools:layout_editor_absoluteY="50dp"
+        tools:layout_editor_absoluteX="6dp"></FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
+    <android.support.design.widget.NavigationView
+        android:id="@+id/nav_view"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:fitsSystemWindows="false"
+        app:menu="@menu/nav_drawer" />
+
+</android.support.v4.widget.DrawerLayout>
