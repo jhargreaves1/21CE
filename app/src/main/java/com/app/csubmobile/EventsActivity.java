@@ -3,6 +3,7 @@ package com.app.csubmobile;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
@@ -10,10 +11,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 
 import com.app.csubmobile.Volley.SlideShow;
@@ -24,15 +27,8 @@ import java.util.HashMap;
 public class EventsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
-
-    ListView listview;
-    ListViewAdapter adapter;
-    ProgressDialog mProgressDialog;
-    ArrayList<HashMap<String, String>> arraylist;
-    static String TITLE = "title";
-    static String LINK = "link";
-    // URL Address
-    String url = "http://www.csub.edu/news/news_archives/";
+    RecyclerView recyclerView;
+    FloatingActionButton backtotop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +36,20 @@ public class EventsActivity extends AppCompatActivity
         setContentView(R.layout.events_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        ReadRssActivity readRss = new ReadRssActivity(this, recyclerView);
+        readRss.execute();
+
+        backtotop = (FloatingActionButton) findViewById(R.id.backtotop);
+        backtotop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.smoothScrollToPosition(0);
+                recyclerView.setScrollbarFadingEnabled(true);
+                recyclerView.setSelected(true);
+            }
+        });
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,11 +147,10 @@ public class EventsActivity extends AppCompatActivity
             // Launching About Simple Dialog
             new AlertDialog.Builder(this)
                     .setTitle("About CSUB TEAM")
-                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin \n\n Copyright \u00a9 2017" + "\n")
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
-        } else if(id == R.id.nav_slideshow){
-            // Launching Blackboard/Moodle
+        } else if (id == R.id.nav_slideshow) {
             Intent i = new Intent(getApplicationContext(), SlideShow.class);
             startActivity(i);
         }

@@ -9,12 +9,15 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import com.app.csubmobile.Volley.SlideShow;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -147,6 +150,16 @@ public class SingleNewsView extends AppCompatActivity
         } else if (id == R.id.nav_blackboard) {
             // Launching Blackboard/Moodle
             Intent i = new Intent(getApplicationContext(), Blackboard_MoodleActivity.class);
+            startActivity(i);
+        } else if (id == R.id.nav_about) {
+            // Launching About Simple Dialog
+            new AlertDialog.Builder(this)
+                    .setTitle("About CSUB TEAM")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin \n\n Copyright \u00a9 2017" + "\n")
+                    .setIcon(android.R.drawable.ic_dialog_map)
+                    .show();
+        } else if (id == R.id.nav_slideshow) {
+            Intent i = new Intent(getApplicationContext(), SlideShow.class);
             startActivity(i);
         }
 

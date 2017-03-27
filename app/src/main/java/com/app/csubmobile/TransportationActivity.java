@@ -161,11 +161,10 @@ public class TransportationActivity extends AppCompatActivity
             // Launching About Simple Dialog
             new AlertDialog.Builder(this)
                     .setTitle("About CSUB TEAM")
-                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin")
+                    .setMessage("Developers: \n - Quy Nguyen \n - Jonathan Dinh \n - John Hargreaves \n - Kevin Jenkin \n\n Copyright \u00a9 2017" + "\n")
                     .setIcon(android.R.drawable.ic_dialog_map)
                     .show();
-        } else if(id == R.id.nav_slideshow){
-            // Launching Blackboard/Moodle
+        } else if (id == R.id.nav_slideshow) {
             Intent i = new Intent(getApplicationContext(), SlideShow.class);
             startActivity(i);
         }

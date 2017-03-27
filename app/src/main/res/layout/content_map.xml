@@ -37,7 +37,7 @@
             fab:menu_labels_ellipsize="end"
             fab:menu_labels_singleLine="true"
             fab:menu_backgroundColor="#ccffffff"
-            fab:menu_fab_label="Menu label"
+            fab:menu_fab_label=""
             fab:menu_colorNormal="#1565C0"
             fab:menu_colorPressed="#2272CD"
             fab:menu_colorRipple="#62B2FF">
