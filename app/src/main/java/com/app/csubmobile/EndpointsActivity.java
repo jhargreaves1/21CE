@@ -8,5 +8,6 @@ public class EndpointsActivity {
 
     // Server user login url
     public static String URL_FACULTY = "http://5.39.77.29/cs4910/get_faculty.php";
+    public static String URL_DINING = "http://5.39.77.29/cs4910/get_dininglocation.php";
 
 }

@@ -102,9 +102,10 @@
             android:value="96d760b7256c80059e6f4776e79e703a26ae5106" />
 
         <activity
-            android:name=".ListBuildings"
-            android:label="@string/title_activity_list_buildings"
-            android:theme="@style/AppTheme"></activity>
+        android:name=".ListBuildings"
+        android:label="@string/title_activity_list_buildings"
+        android:theme="@style/AppTheme"></activity>
+
     </application>
 
 </manifest>

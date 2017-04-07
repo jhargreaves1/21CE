@@ -18,9 +18,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by akshay on 1/2/15.
- */
 public class BuildingListAdapter extends ArrayAdapter<BuildingItem> {
 
     Context context;

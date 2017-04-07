@@ -485,17 +485,17 @@ public class MapActivity extends AppCompatActivity
                                 break;
                         }
 
-                        // Set the size of the image
+                        // Set the size of the image. This is for the popup on markers clicked
                         buildingImage.setLayoutParams(new android.view.ViewGroup.LayoutParams(700, 550));
 
-                        // Stylizing description box
+                        // Stylizing description box. This is for the popup on markers clicked
                         description.setBackgroundColor(Color.parseColor("#ffffff"));
                         description.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
                         description.setLayoutParams(new android.view.ViewGroup.LayoutParams(700, ViewGroup.LayoutParams.WRAP_CONTENT));
                         description.setTextSize(18);
                         description.setTypeface(null, Typeface.BOLD);
 
-                        // add imageview and textview to parent layout
+                        // add imageview and textview to parent layout. This is for the popup on markers clicked
                         parent.addView(buildingImage);
                         parent.addView(description);
 

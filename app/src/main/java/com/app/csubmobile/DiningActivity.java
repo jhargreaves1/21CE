@@ -1,5 +1,6 @@
 package com.app.csubmobile;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,21 +14,48 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.app.csubmobile.Volley.SlideShow;
+import com.app.csubmobile.adapter.DiningListAdapter;
+import com.app.csubmobile.data.DiningItem;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.app.csubmobile.EndpointsActivity.URL_DINING;
 
 public class DiningActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
+    private ListView dining_lv;
+    private List<DiningItem> dining_list;
+    private DiningListAdapter listAdapter;
+    private ProgressDialog pDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dining_layout);
+        dining_lv = (ListView)findViewById(R.id.dining_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        pDialog = new ProgressDialog(this);
+        pDialog.setCancelable(false);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        dining_list = new ArrayList<DiningItem>();
+
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -36,6 +64,10 @@ public class DiningActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // get dining locations from server
+        get_data(URL_DINING, dining_list);
+
     }
 
     @Override
@@ -134,5 +166,64 @@ public class DiningActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
         return true;
+    }
+
+    private void get_data(String url, final List list) {
+        pDialog.setMessage("Loading data ...");
+        showDialog();
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest strReq = new StringRequest(Request.Method.GET,
+                url, new Response.Listener<String>() {
+
+            @Override
+            public void onResponse(String response) {
+                hideDialog();
+                try {
+                    // Reading response into an array
+                    JSONArray jObj = new JSONArray(response);
+                    JSONObject json = null;
+                    final String[] name = new String[jObj.length()];
+                    for (int i = 0; i < jObj.length(); i++) {
+                        json = jObj.getJSONObject(i);
+                        String location_name = json.getString("name");
+                        String description = json.getString("description");
+                        Double lng = json.getDouble("longitude");
+                        Double lat = json.getDouble("latitude");
+                        int has_menu = json.getInt("contain_menu");
+
+                        DiningItem temp_item = new DiningItem(location_name, description, lng, lat, has_menu);
+                        dining_list.add(new DiningItem(location_name, description, lng, lat, has_menu));
+                        //Log.d("Dining Debug: ", temp_item.getName());
+                    }
+
+                    // setting up listview and display data
+                    listAdapter = new DiningListAdapter(DiningActivity.this, dining_list);
+                    dining_lv.setAdapter(listAdapter);
+                } catch (JSONException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                hideDialog();
+                Toast.makeText(DiningActivity.this, "Failure getting data from server.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        requestQueue.add(strReq);
+    }
+
+    private void showDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hideDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 }
