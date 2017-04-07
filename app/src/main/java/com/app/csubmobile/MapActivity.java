@@ -548,9 +548,9 @@ public class MapActivity extends AppCompatActivity
                 showMarkersActionButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        /*if (map != null) {
+                        if (map != null) {
                             new ShowAllMarkers().execute();
-                        }*/
+                        }
                     }
                 });
 
