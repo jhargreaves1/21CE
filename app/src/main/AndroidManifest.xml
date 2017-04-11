@@ -9,8 +9,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-
     <uses-feature android:name="android.hardware.location.gps" />
+
+    <permission
+        android:name="com.app.csubmobile.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission
+        android:name="com.app.csubmobile.permission.C2D_MESSAGE" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
 
     <application
         android:name=".appcontroller.AppController"
@@ -105,6 +113,35 @@
         android:name=".ListBuildings"
         android:label="@string/title_activity_list_buildings"
         android:theme="@style/AppTheme"></activity>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.app.csubmobile" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".TokenRefreshListenerService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".RegistrationService"
+            android:exported="false"/>
+
+        <service
+            android:name=".NotificationsListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
 
     </application>
 

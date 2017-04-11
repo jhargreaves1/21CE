@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_layout);
+        Intent i = new Intent(getApplicationContext(), RegistrationService.class);
+        startService(i);
+
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         get_data(URL_FACULTY, directory);

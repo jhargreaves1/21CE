@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "273405018837",
+    "project_id": "csub-mobile"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273405018837:android:1d844ec963ed6dcd",
+        "android_client_info": {
+          "package_name": "com.app.csubmobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9M_2ESwitNLmkeySUT68xvYuhphG1ULU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
