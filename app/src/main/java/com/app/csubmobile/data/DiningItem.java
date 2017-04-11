@@ -10,18 +10,19 @@ public class DiningItem {
     public double lat;
     public String description;
     public int has_menu = 0;
-
+    public String icon;
     public DiningItem() {
 
     }
 
-    public DiningItem(String buildingName, String description, double lng, double lat, int has_menu) {
+    public DiningItem(String buildingName, String description, double lng, double lat, int has_menu, String icon) {
         super();
         this.buildingName = buildingName;
         this.lng = lng;
         this.lat = lat;
         this.description = description;
         this.has_menu = has_menu;
+        this.icon = icon;
     }
 
     public String getName() {
@@ -35,6 +36,9 @@ public class DiningItem {
     }
     public String getDescription() {
         return this.description;
+    }
+    public String getIcon() {
+        return this.icon;
     }
     public int getMenubool() {
         return has_menu;

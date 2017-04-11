@@ -58,18 +58,24 @@ public class DiningListAdapter extends BaseAdapter{
 
         dining_name.setText(item.getName());
         dining_description.setText(item.getDescription());
-        switch (item.getName()) {
-            case "Rowdy":
+        switch (item.getIcon()) {
+            case "Burger":
                 dining_icon.setImageResource(R.drawable.burger_icon);
                 break;
-            case "Peets Coffee House":
+            case "Coffee":
                 dining_icon.setImageResource(R.drawable.coffee_icon);
                 break;
-            case "Runner Cafe":
+            case "Tray":
                 dining_icon.setImageResource(R.drawable.cafeteria_icon);
                 break;
-            case "Togo's":
+            case "Sandwich":
                 dining_icon.setImageResource(R.drawable.sandwich_icon);
+                break;
+            case "ForkKnife":
+                dining_icon.setImageResource(R.drawable.forkknife_icon);
+                break;
+            default:
+                dining_icon.setImageResource(R.drawable.forkknife_icon);
                 break;
         }
 

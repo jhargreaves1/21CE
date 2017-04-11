@@ -188,12 +188,13 @@ public class DiningActivity extends AppCompatActivity
                         json = jObj.getJSONObject(i);
                         String location_name = json.getString("name");
                         String description = json.getString("description");
+                        String icon = json.getString("icon");
                         Double lng = json.getDouble("longitude");
                         Double lat = json.getDouble("latitude");
                         int has_menu = json.getInt("contain_menu");
 
-                        DiningItem temp_item = new DiningItem(location_name, description, lng, lat, has_menu);
-                        dining_list.add(new DiningItem(location_name, description, lng, lat, has_menu));
+
+                        dining_list.add(new DiningItem(location_name, description, lng, lat, has_menu, icon));
                         //Log.d("Dining Debug: ", temp_item.getName());
                     }
 

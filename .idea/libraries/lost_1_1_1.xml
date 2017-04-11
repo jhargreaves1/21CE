@@ -1,8 +1,11 @@
 <component name="libraryTable">
   <library name="lost-1.1.1">
+    <ANNOTATIONS>
+      <root url="jar://$USER_HOME$/.android/build-cache/354116025bade7dc455f0e1df71dcf16df65acfd/output/annotations.zip!/" />
+    </ANNOTATIONS>
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/85843cf9f263e0dac1f18a67613ea509d4e908c5/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/85843cf9f263e0dac1f18a67613ea509d4e908c5/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/354116025bade7dc455f0e1df71dcf16df65acfd/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/354116025bade7dc455f0e1df71dcf16df65acfd/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
