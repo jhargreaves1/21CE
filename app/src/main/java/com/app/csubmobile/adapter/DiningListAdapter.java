@@ -2,26 +2,33 @@ package com.app.csubmobile.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.app.csubmobile.MapActivity;
 import com.app.csubmobile.R;
+import com.app.csubmobile.data.BuildingItem;
 import com.app.csubmobile.data.DiningItem;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Jonathan on 4/6/2017.
  */
 
-public class DiningListAdapter extends BaseAdapter{
+public class DiningListAdapter extends BaseAdapter {
     private Activity activity;
     private LayoutInflater inflater;
     private List<DiningItem> feedItems;
+    private DiningItem selected;
 
     public DiningListAdapter(Activity activity, List<DiningItem> feedItems) {
         this.activity = activity;
@@ -43,7 +50,7 @@ public class DiningListAdapter extends BaseAdapter{
         return position;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         if (inflater == null)
             inflater = (LayoutInflater) activity
@@ -78,6 +85,21 @@ public class DiningListAdapter extends BaseAdapter{
                 dining_icon.setImageResource(R.drawable.forkknife_icon);
                 break;
         }
+
+        convertView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                DiningItem selectedBuilding = feedItems.get(position);
+                if (selectedBuilding != null && selectedBuilding.getLat()!= 0.0) {
+                    Intent i = new Intent(activity, MapActivity.class);
+                    i.putExtra("Dining", (Serializable) selectedBuilding);
+                    activity.startActivity(i);
+                    ((Activity)activity).finish();
+                }
+                //Toast.makeText(context, selectedBuilding.getName()+"", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         return convertView;
     }

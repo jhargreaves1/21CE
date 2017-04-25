@@ -1,13 +1,15 @@
 package com.app.csubmobile.data;
 
+import java.io.Serializable;
+
 /**
  * Created by Jonathan on 4/6/2017.
  */
 
-public class DiningItem {
+public class DiningItem implements Serializable {
     public String buildingName;
-    public double lng;
-    public double lat;
+    public double lng = 0;
+    public double lat = 0;
     public String description;
     public int has_menu = 0;
     public String icon;
@@ -59,4 +61,6 @@ public class DiningItem {
     public void setMenubool(int has_menu) {
         this.has_menu = has_menu;
     }
+
+
 }

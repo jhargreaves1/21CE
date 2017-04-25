@@ -40,6 +40,7 @@ import android.widget.Toast;
 
 import com.app.csubmobile.Volley.SlideShow;
 import com.app.csubmobile.data.BuildingItem;
+import com.app.csubmobile.data.DiningItem;
 import com.mapbox.mapboxsdk.MapboxAccountManager;
 import com.mapbox.mapboxsdk.annotations.Marker;
 import com.mapbox.mapboxsdk.annotations.MarkerView;
@@ -79,7 +80,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MapActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, Serializable{
 
     private DrawerLayout drawer;
     private static final String TAG = "MapActivity";
@@ -96,7 +97,8 @@ public class MapActivity extends AppCompatActivity
     private PolylineOptions newroute;
     private DrawerLayout mDrawerLayout;
     private Intent i;
-    private BuildingItem selectedBuilding;
+    private BuildingItem selectedBuilding = null;
+    private DiningItem selectedDining = null;
     private List<BuildingItem> buildings = new ArrayList<BuildingItem>();
     private List<LatLng> polygon;
     private Criteria criteria;
@@ -109,10 +111,12 @@ public class MapActivity extends AppCompatActivity
         polygon = new ArrayList<LatLng>();
         markersOn = false;
 
-        // Checking for extra contents
+        // Checking for extra contents from search
         i = getIntent();
         selectedBuilding = (BuildingItem) i.getSerializableExtra("Building");
+        selectedDining = (DiningItem) i.getSerializableExtra("Dining");
 
+        //
         super.onCreate(savedInstanceState);
         // Mapbox access token is configured here. This needs to be called either in your application
         // object or in the same activity which contains the mapview.
@@ -145,7 +149,10 @@ public class MapActivity extends AppCompatActivity
                 // if this is launched from search activity then we get the selected building that
                 // user searched
                 if (selectedBuilding != null) {
-                    new ShowSelectedBuildingMarker().execute();
+                    new ShowSelectedBuildingMarker(selectedBuilding).execute();
+                }
+                if (selectedDining != null) {
+                    new ShowSelectedBuildingMarker(selectedDining).execute();
                 }
                 /*
                 // University Advancement #7
@@ -187,6 +194,11 @@ public class MapActivity extends AppCompatActivity
                         centerCamera(marker);
 
                         switch (marker.getTitle()) {
+                            case "Togo's":
+                                buildingImage.setImageDrawable(ContextCompat.getDrawable(
+                                        MapActivity.this, R.drawable.sci_3b));
+                                description.setText(marker.getSnippet());
+                                break;
                             case "Well Core Repository":
                                 buildingImage.setImageDrawable(ContextCompat.getDrawable(
                                         MapActivity.this, R.drawable.well_core));
@@ -624,18 +636,42 @@ public class MapActivity extends AppCompatActivity
     }
 
     private class ShowSelectedBuildingMarker extends AsyncTask<Void, Void, List<LatLng>> {
+        private DiningItem selectedD = null;
+        private BuildingItem selectedB = null;
+
+        public ShowSelectedBuildingMarker(DiningItem selected) {
+            this.selectedD = selected;
+        }
+
+        public ShowSelectedBuildingMarker(BuildingItem selected) {
+            this.selectedB = selected;
+        }
+
 
         @Override
         protected void onPostExecute(List<LatLng> points) {
-            Marker selected = map.addMarker(new MarkerViewOptions()
-                    .position(new LatLng(selectedBuilding.getLng(), selectedBuilding.getLat()))
-                    .title(selectedBuilding.getName())
-                    .snippet(selectedBuilding.getName())
-                    .visible(true));
-            // set selected building as destination
-            destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
-            // center to that marker
-            centerCamera(selected);
+            if (this.selectedD!= null) {
+                Marker selected = map.addMarker(new MarkerViewOptions()
+                        .position(new LatLng(selectedD.getLng(), selectedD.getLat()))
+                        .title(selectedD.getName())
+                        .snippet(selectedD.getName())
+                        .visible(true));
+                // set selected building as destination
+                destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
+                // center to that marker
+                centerCamera(selected);
+            }
+            if (this.selectedB!= null) {
+                Marker selected = map.addMarker(new MarkerViewOptions()
+                        .position(new LatLng(selectedB.getLng(), selectedB.getLat()))
+                        .title(selectedB.getName())
+                        .snippet(selectedB.getName())
+                        .visible(true));
+                // set selected building as destination
+                destination = Position.fromCoordinates(selected.getPosition().getLongitude(), selected.getPosition().getLatitude());
+                // center to that marker
+                centerCamera(selected);
+            }
         }
 
         @Override
