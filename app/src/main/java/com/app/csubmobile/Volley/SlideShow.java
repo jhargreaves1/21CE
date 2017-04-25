@@ -2,9 +2,12 @@ package com.app.csubmobile.Volley;
 
 // Created by captnemo on 3/18/2017.
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.transition.Slide;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -12,19 +15,26 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.app.csubmobile.Ee;
+import com.app.csubmobile.EventsActivity;
 import com.app.csubmobile.R;
 
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class SlideShow  extends AppCompatActivity {
+import static com.app.csubmobile.R.layout.ee;
+
+public class SlideShow  extends AppCompatActivity implements View.OnClickListener{
     Animation fadein, fadeout, zoomin;
+    Button button;
     ViewFlipper viewFlipper;
+    //Button ee_button = (Button) findViewById(R.id.ee_button);
     int[] images = {
             R.drawable.admin_east ,
             R.drawable.admin_west ,
@@ -218,6 +228,14 @@ public class SlideShow  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.slideshow);
+        button= (Button) findViewById(R.id.ee_button);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent i = new Intent(SlideShow.this, Ee.class);
+                startActivity(i);
+            }
+        });
 
 
 
@@ -226,7 +244,7 @@ public class SlideShow  extends AppCompatActivity {
         //zoomin = AnimationUtils.loadAnimation(this, android.R.anim.a);
         fadeout = AnimationUtils.loadAnimation(this, android.R.anim.fade_out);
         fadeout.setInterpolator(new AccelerateInterpolator());
-        setContentView(R.layout.slideshow);
+
         new CountDownTimer(1500000, 5000) { // 5000 = 5 sec
             public void onTick(long millisUntilFinished) {
                 ImageView pic = (ImageView) findViewById(R.id.ripple_view);
@@ -244,8 +262,12 @@ public class SlideShow  extends AppCompatActivity {
         }.start();
 
     }
-
+    @Override
+    public void onClick(View view) {
+        Intent i = new Intent(getApplicationContext(), Ee.class);
+        startActivity(i);
     }
+}
 
 
 

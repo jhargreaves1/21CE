@@ -96,6 +96,10 @@
             android:name=".SingleNewsView"
             android:label="@string/title_activity_news"
             android:parentActivityName=".NewsActivity" />
+        <activity
+            android:name=".Ee"
+            android:label="Ee"
+            android:parentActivityName=".Volley.SlideShow" />
         // telemetry service for MapBox
         <service android:name="com.mapbox.mapboxsdk.telemetry.TelemetryService" />
         <!--

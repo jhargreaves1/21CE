@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="adal-1.2.2">
     <CLASSES>
-      <root url="file://$USER_HOME$/.android/build-cache/ff930117f71a94623ba63d4fc026eec6fd48f046/output/res" />
-      <root url="jar://$USER_HOME$/.android/build-cache/ff930117f71a94623ba63d4fc026eec6fd48f046/output/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.android/build-cache/4b79a5e410a9f9effaaed0a6d13b2af6092aef4f/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/4b79a5e410a9f9effaaed0a6d13b2af6092aef4f/output/res" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>

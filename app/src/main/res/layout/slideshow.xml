@@ -15,9 +15,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Button
+        android:id="@+id/ee_button"
+        android:layout_width="600dp"
+        android:layout_height="200dp"
+        android:clickable="true"
+        android:onClick="ee"
+        android:text=" " />
     <ImageView
         android:id="@+id/ripple_view"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="8dp"
@@ -30,7 +37,7 @@
 
     <TextView
         android:id="@+id/slide_caption"
-        android:layout_width="match_parent"
+        android:layout_width="344dp"
         android:layout_height="91dp"
         android:layout_marginBottom="8dp"
         android:background="@color/CSUB_GOLD"
@@ -55,14 +62,17 @@
     </LinearLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="344dp"
         android:layout_height="150dp"
         android:background="@color/CSUB_GOLD"
         android:clickable="true"
         android:focusable="true"
         android:foreground="@drawable/ripple"
-        tools:layout_editor_absoluteY="50dp"
-        tools:layout_editor_absoluteX="6dp"></FrameLayout>
+        tools:layout_editor_absoluteY="75dp"
+        tools:layout_editor_absoluteX="8dp">
+
+
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>
     <android.support.design.widget.NavigationView
