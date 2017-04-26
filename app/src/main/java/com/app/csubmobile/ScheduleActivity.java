@@ -489,134 +489,214 @@ package com.app.csubmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.content.Intent;
-import android.util.Log;
-import android.widget.TextView;
-import android.view.View;
+import android.widget.CalendarView;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.Toast;
+
+import com.app.csubmobile.Volley.SlideShow;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.SettableFuture;
 import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationContext;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.PromptBehavior;
-import com.app.csubmobile.Volley.SlideShow;
+//import com.microsoft.samples.o365quickstart.R;
+import com.microsoft.services.orc.auth.AuthenticationCredentials;
+import com.microsoft.services.orc.core.DependencyResolver;
+import com.microsoft.services.orc.core.OrcCollectionFetcher;
+import com.microsoft.services.orc.http.Credentials;
+import com.microsoft.services.orc.http.impl.LoggingInterceptor;
+import com.microsoft.services.orc.http.impl.OAuthCredentials;
+import com.microsoft.services.orc.http.impl.OkHttpTransport;
+import com.microsoft.services.orc.serialization.impl.GsonSerializer;
+import com.microsoft.services.outlook.Event;
+import com.microsoft.services.outlook.Message;
+import com.microsoft.services.outlook.fetchers.CalendarFetcher;
+import com.microsoft.services.outlook.fetchers.EventCollectionOperations;
+import com.microsoft.services.outlook.fetchers.EventFetcher;
+import com.microsoft.services.outlook.fetchers.OutlookClient;
+import com.microsoft.services.outlook.*;
 
+import org.joda.time.DateTime;
+import org.joda.time.Instant;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class ScheduleActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    Logger logger = LoggerFactory.getLogger(MainActivity.class);
+
+    private static final String TAG = "ScheduleActivity";
+    private static final String outlookBaseUrl = "https://outlook.office.com/api/v2.0";
+
+    private AuthenticationContext _authContext;
+    private DependencyResolver _resolver;
+    private OutlookClient _client;
+
+    private ListView lvMessages;
+    private String[] scopes = new String[]{"https://outlook.office.com/mail.read"};
+
     DrawerLayout drawer;
-    public final static String CLIENT_ID = "b60695eb-a922-481e-959c-c5fe79691eed"; //This is your client ID
-    public final static String REDIRECT_URI = "http://localhost"; //This is your redirect URI
-
-    public final static String AUTHORITY_URL = "https://login.microsoftonline.com/common";  //COMMON OR YOUR TENANT ID
-
-    private final static String AUTH_TAG = "auth"; // Search "auth" in your Android Monitor to see errors
-
-    private AuthenticationContext mAuthContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.schedule_layout);
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(false);
 
-       // NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-       // navigationView.setNavigationItemSelectedListener(this);
+
+        lvMessages = (ListView) findViewById(R.id.lvMessages);
+
+        Futures.addCallback(logon(), new FutureCallback<Boolean>() {
+            @Override
+            public void onSuccess(Boolean result) {
+                _client = new OutlookClient(outlookBaseUrl, _resolver);
+                getMessages();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                logger.error("authentication failed", t);
+            }
+        });
     }
 
-    public void signIn (final View v)
-    {
-        mAuthContext = new AuthenticationContext(ScheduleActivity.this, AUTHORITY_URL, true);
+    public SettableFuture<Boolean> logon() {
 
-        mAuthContext.acquireToken(
-                ScheduleActivity.this,
-                CLIENT_ID,
-                CLIENT_ID,
-                REDIRECT_URI,
-                PromptBehavior.Auto,
-                new AuthenticationCallback<AuthenticationResult>()
-                {
+        final SettableFuture<Boolean> result = SettableFuture.create();
 
-                    @Override
-                    public void onError(Exception e)
-                    {
-                        Log.e(AUTH_TAG, "Error getting token: " + e.toString());
+        try {
+            _authContext = new AuthenticationContext(this, getResources().getString(R.string.AADAuthority), true);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to initialize Authentication Context with error: " + e.getMessage());
+            _authContext = null;
+            result.setException(e);
+        }
+
+        if (_authContext != null) {
+            _authContext.acquireToken(
+                    this,
+                    scopes,
+                    null,
+                    getResources().getString(R.string.AADClientId),
+                    getResources().getString(R.string.AADRedirectUrl),
+                    PromptBehavior.Auto,
+                    new AuthenticationCallback<AuthenticationResult>() {
+
+                        @Override
+                        public void onSuccess(final AuthenticationResult authenticationResult) {
+
+                            if (authenticationResult != null && authenticationResult.getStatus() == AuthenticationResult.AuthenticationStatus.Succeeded) {
+                                _resolver = new DependencyResolver.Builder(
+                                        new OkHttpTransport().setInterceptor(new LoggingInterceptor()), new GsonSerializer(),
+                                        new AuthenticationCredentials() {
+                                            @Override
+                                            public Credentials getCredentials() {
+                                                return new OAuthCredentials(authenticationResult.getAccessToken());
+                                            }
+                                        }).build();
+
+                                result.set(true);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Exception e) {
+                            result.setException(e);
+                        }
                     }
+            );
+        }
 
+        return result;
+    }
+
+    public void getMessages() {
+        logger.info("Getting messages...");
+        Futures.addCallback(_client.getMe().getEvents().read(), new FutureCallback<List<Event>>() {
+            //Futures.addCallback((ListenableFuture<List<Event>>) _client.getMe().getEvents().top(20), new FutureCallback<List<Event>>() {
+            @Override
+            public void onSuccess(final List<Event> result) {
+                logger.info("Preparing messages for display.");
+                List<Map<String, String>> listOfMessages = new ArrayList<Map<String, String>>();
+
+                for (Event m : result) {
+                    Map<String, String> oneMessage = new HashMap<String, String>();
+                    oneMessage.put("subject", m.getSubject());
+                    //oneMessage.put("body", m.getBodyPreview());
+                    //oneMessage.put("date", m.getStart().toString());
+
+                /*if (m.getFrom() != null && m.getFrom().getEmailAddress() != null) {
+                    oneMessage.put("from", "From: " + m.getFrom().getEmailAddress().getAddress());
+                }
+                */
+                    DateTime startDate = new DateTime();
+                    String date = m.getStart().getDateTime();
+                    String start = startDate.toString();
+                    if (date.compareTo(start) > 0)
+                        listOfMessages.add(oneMessage);
+                }
+
+                if (listOfMessages.isEmpty()) {
+                    Map<String, String> oneMessage = new HashMap<String, String>();
+                    oneMessage.put("subject", "You have no upcoming events");
+                    listOfMessages.add(oneMessage);
+                }
+
+                final SimpleAdapter adapter = new SimpleAdapter(ScheduleActivity.this, listOfMessages,
+                        android.R.layout.simple_list_item_2,
+                        new String[]{"subject", "body", "date"},
+                        new int[]{android.R.id.text1, android.R.id.text2, android.R.id.text2});
+
+                runOnUiThread(new Runnable() {
                     @Override
-                    public void onSuccess(AuthenticationResult result)
-                    {
-                        Log.v(AUTH_TAG, "Successfully obtained token, still need to validate");
-                        if (result != null && !result.getAccessToken().isEmpty())
-                        {
-                            try
-                            {
-                                String firstName = result.getUserInfo().getGivenName();
-                                String lastName = result.getUserInfo().getFamilyName();
-                                updateLoggedInUI(firstName, lastName);
-                            }
-                            catch (Exception e)
-                            {
-                                Log.e(AUTH_TAG, "Exception Generated, Unable to hit the backend: " + e.toString());
-                            }
-                        }
-                        else
-                        {
-                            Log.e(AUTH_TAG, "Error: token came back empty");
-                        }
+                    public void run() {
+                        lvMessages.setAdapter(adapter);
                     }
                 });
-    }
+            }
 
-    private void updateLoggedInUI(String firstName, String lastName) {
-    /* Hide the sign in button */
-        findViewById(R.id.sign_in_button).setVisibility(View.INVISIBLE);
-
-    /* Show the welcome message */
-        TextView signedIn = (TextView) findViewById(R.id.welcomeSignedIn);
-        signedIn.setVisibility(View.VISIBLE);
-        signedIn.setText("Welcome " + firstName + " " + lastName);
-
-
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        super.onActivityResult(requestCode, resultCode, data);
-        mAuthContext.onActivityResult(requestCode, resultCode, data);
+            @Override
+            public void onFailure(final Throwable t) {
+                logger.error(t.getMessage(), t);
+            }
+        });
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.END)) {
-            drawer.closeDrawer(GravityCompat.END);
-        } else {
-            super.onBackPressed();
-        }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        _authContext.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
@@ -707,3 +787,4 @@ public class ScheduleActivity extends AppCompatActivity
         return true;
     }
 }
+

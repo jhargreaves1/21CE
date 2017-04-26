@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="msa-auth-0.8.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.android/build-cache/e7c05a349bc50f85fa86a3bd9d2b160017bd0c1b/output/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.android/build-cache/e7c05a349bc50f85fa86a3bd9d2b160017bd0c1b/output/res" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.services.msa/msa-auth/0.8.1/a95db2267c3647f0c84f152f3d3ea0a971c276da/msa-auth-0.8.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

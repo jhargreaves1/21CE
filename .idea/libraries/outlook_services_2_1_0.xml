@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="outlook-services-2.1.0">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.android/build-cache/46b9ad42e0b5c1390115b444032e49299ef61958/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/46b9ad42e0b5c1390115b444032e49299ef61958/output/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.microsoft.services/outlook-services/2.1.0/355812dfe18321d0d46744436460a3e41f95822b/outlook-services-2.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

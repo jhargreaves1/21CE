@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="osmdroid-android-5.5">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.android/build-cache/c46121d7cc9b6c1bb6e4dc82ceb847af66d6c1d0/output/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.android/build-cache/c46121d7cc9b6c1bb6e4dc82ceb847af66d6c1d0/output/res" />
+      <root url="file://$USER_HOME$/.android/build-cache/52799b2995ff88b0a855572eda5c59b53cbe4202/output/res" />
+      <root url="jar://$USER_HOME$/.android/build-cache/52799b2995ff88b0a855572eda5c59b53cbe4202/output/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

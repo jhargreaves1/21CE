@@ -1,4 +1,9 @@
 <resources>
+    <string name="AADAuthority">https://login.microsoftonline.com/common/oauth2/v2.0</string>
+    <string name="AADClientId">8c75361e-ade4-41f2-b175-63f97a2cc665</string>
+    <string name="AADResourceId">https://outlook.office.com/</string>
+    <string name="AADRedirectUrl">https://login.microsoftonline.com/common/oauth2/nativeclient</string>
+
     <string name="app_name">CSUB</string>
     <string name="footer">www.csub.edu</string>
     <string name="map">Map Screen</string>
