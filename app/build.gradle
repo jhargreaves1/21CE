@@ -18,7 +18,8 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -33,6 +34,11 @@ android {
             }
         }
     }
+//    android {
+//        dexOptions {
+//            jumboMode = true
+//        }
+//    }
 }
 
 configurations.all {
@@ -56,6 +62,7 @@ repositories {
 }
 
 dependencies {
+    compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.clans:fab:1.6.4'
 
     compile fileTree(include: ['*.jar'], dir: 'libs')
@@ -69,10 +76,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
     compile 'org.osmdroid:osmdroid-android:5.5:release@aar'
 
-
     compile "com.google.android.gms:play-services-gcm:10.2.0"
-//    compile("com.google.android.gms:play-services-gcm:9.6.1")
-    //compile 'com.google.firebase:firebase-appindexing:10.0.0'
     // add the Mapbox SDK dependency below
     compile('com.mapbox.mapboxsdk:mapbox-android-sdk:4.2.0-beta.5@aar') {
         transitive = true
@@ -82,14 +86,6 @@ dependencies {
     }
     compile 'org.jsoup:jsoup:1.10.2'
     compile 'pub.devrel:easypermissions:0.2.1'
-//    compile('com.google.api-client:google-api-client-android:1.22.0') {
-//        exclude group: 'org.apache.httpcomponents'
-//        exclude group: 'com.google.guava'
-//    }
-//    compile('com.google.apis:google-api-services-calendar:v3-rev232-1.22.0') {
-//        exclude group: 'org.apache.httpcomponents'
-//        exclude group: 'com.google.guava'
-//    }
     compile 'com.lapism:searchview:4.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
 
@@ -99,7 +95,7 @@ dependencies {
     compile 'com.daimajia.easing:library:2.0@aar'
     compile 'com.daimajia.androidanimations:library:2.2@aar'
 
-    compile('com.microsoft.services:outlook-services:2.1.0'){
+    compile('com.microsoft.services:outlook-services:2.1.0') {
         transitive = true
     }
 }

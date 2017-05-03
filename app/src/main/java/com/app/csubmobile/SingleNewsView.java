@@ -220,8 +220,8 @@ public class SingleNewsView extends AppCompatActivity
         protected void onPostExecute(Void result) {
             newsContent = (TextView) findViewById(R.id.contentView);
             newsContent.setText(articleContent);
-            newsDate = (TextView) findViewById(R.id.newsDate);
-            newsDate.setText(articleDate);
+//            newsDate = (TextView) findViewById(R.id.newsDate);
+//            newsDate.setText(articleDate);
             mProgressDialog.dismiss();
         }
     }

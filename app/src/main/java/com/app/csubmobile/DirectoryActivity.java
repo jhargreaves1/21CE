@@ -2,6 +2,7 @@ package com.app.csubmobile;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
@@ -14,6 +15,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -42,6 +46,8 @@ public class DirectoryActivity extends AppCompatActivity
     public static List<String> directory = new ArrayList<String>();
     private ArrayAdapter<String> adapter;
 
+    private WebView myWebView;
+
     /**
      * Called when the activity is first created.
      */
@@ -49,14 +55,22 @@ public class DirectoryActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        get_data(URL_FACULTY, directory);
+        /*get_data(URL_FACULTY, directory);*/
         super.onCreate(savedInstanceState);
         setContentView(R.layout.directory_layout);
-        if (get_data(URL_FACULTY, directory))
-            setList();
+        /*if (get_data(URL_FACULTY, directory))
+            setList();*/
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /* WebView Start */
+        myWebView = (WebView) findViewById(R.id.myWebView);
+        myWebView.loadUrl("http://www.csub.edu/directory/#/list");
+        myWebView.setWebViewClient(new MyWebViewClient());
+        WebSettings webSettings = myWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
+        /* Navigation Drawer Start */
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -66,6 +80,31 @@ public class DirectoryActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // Use When the user clicks a link from a web page in your WebView
+    private class MyWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (url.startsWith("tel:")) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                startActivity(intent);
+            } else if (url.startsWith("http:") || url.startsWith("https:")) {
+                view.loadUrl(url);
+            } else if (url.startsWith("mailto:")) {
+                url = url.substring(7);
+                String body = "Body of message.";
+                Intent mail = new Intent(Intent.ACTION_SEND);
+                mail.setType("application/octet-stream");
+                mail.putExtra(Intent.EXTRA_EMAIL, new String[]{url});
+                mail.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+                mail.putExtra(Intent.EXTRA_TEXT, body);
+                startActivity(mail);
+                return true;
+            }
+            return true;
+        }
+
     }
 
     @Override
@@ -166,14 +205,14 @@ public class DirectoryActivity extends AppCompatActivity
         return true;
     }
 
-    private void setList() {
+    /*private void setList() {
         ListView listView = (ListView) findViewById(R.id.directory);
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, directory);
         listView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-    }
+    }*/
 
-    private boolean get_data(String url, final List list) {
+    /*private boolean get_data(String url, final List list) {
         pDialog.setMessage("Loading data ...");
         showDialog();
 
@@ -219,7 +258,7 @@ public class DirectoryActivity extends AppCompatActivity
         });
         requestQueue.add(strReq);
         return true;
-    }
+    }*/
 
     private void showDialog() {
         if (!pDialog.isShowing())

@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true">
 
             <include
-                layout="@layout/news_singleview_constraint" />
+                layout="@layout/news_singleview_constraint2" />
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>

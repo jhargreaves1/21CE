@@ -22,7 +22,7 @@
             android:fitsSystemWindows="true">
 
             <include
-                layout="@layout/content_directory" />
+                layout="@layout/content_directory_webview" />
         </android.support.design.widget.CoordinatorLayout>
 
     </LinearLayout>

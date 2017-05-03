@@ -16,10 +16,6 @@ import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.ArrayList;
 
-/**
- * Created by qpngd on 3/26/2017.
- */
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     ArrayList<FeedItem> feedItems;
     Context context;
