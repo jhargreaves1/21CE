@@ -18,6 +18,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.app.csubmobile.Ee;
@@ -35,6 +36,7 @@ public class SlideShow  extends AppCompatActivity implements View.OnClickListene
     Button button;
     ViewFlipper viewFlipper;
     //Button ee_button = (Button) findViewById(R.id.ee_button);
+    int numClick;
     int[] images = {
             R.drawable.admin_east ,
             R.drawable.admin_west ,
@@ -232,8 +234,12 @@ public class SlideShow  extends AppCompatActivity implements View.OnClickListene
         button= (Button) findViewById(R.id.ee_button);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent i = new Intent(SlideShow.this, Ee.class);
-                startActivity(i);
+                numClick++;
+                if(numClick>=3) {
+                    numClick = 0;
+                    Intent i = new Intent(SlideShow.this, Ee.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -264,8 +270,14 @@ public class SlideShow  extends AppCompatActivity implements View.OnClickListene
     }
     @Override
     public void onClick(View view) {
-        Intent i = new Intent(getApplicationContext(), Ee.class);
-        startActivity(i);
+        Toast.makeText(this, numClick,
+                Toast.LENGTH_LONG).show();
+        numClick++;
+        if(numClick>=3) {
+            numClick = 0;
+            Intent i = new Intent(getApplicationContext(), Ee.class);
+            startActivity(i);
+        }
     }
 }
 

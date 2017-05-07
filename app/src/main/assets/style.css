@@ -1,0 +1,91 @@
+body {
+	margin: 0px;
+	padding: 0px;
+	background: #CCCCCC;
+	font: 13px verdana, Helvetica, sans-serif;
+	color: #ffffff;
+}
+
+table {
+    border: 1px solid black;
+	font-size: 150%;
+}
+
+
+input, button, select, option, textarea {
+    font-size: 120%;
+}
+
+#board {
+    background: url("images/3MenBoard.jpg");
+    background-size: 100% 100%;
+	background-position: 10px 10px;
+    background-repeat: no-repeat;
+    padding-top: 40px;
+	 
+}
+
+#header {
+	width: 778px;
+	height: 405px;
+	padding-left: 30px;
+}
+
+
+#menu {
+height: 153px;
+}
+
+#menu ul {
+	margin: 0;
+	padding-top: 88px;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	display: block;
+	float: left;
+	width: 130px;
+	height: 30px;
+	margin-left: 1px;
+	padding-top: 15px;
+	background: url(images/button.png) no-repeat;
+	text-align: center;
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+#menu a:hover {
+	height: 34px;
+	margin-top: -3px;
+	font-size: 16px;
+	text-decoration: underline;
+}
+
+
+#footer {
+	height: 71px;
+	padding-top: 70px;
+	background: #ACCFEC url(images/footer.gif) repeat-x;
+	text-align: center;
+}
+
+#footer p {
+	margin: 0;
+	font-size: 10px;
+	color: #ffffff;
+}
+
+#footer a {
+	color: #ffffff;
+	font-size: 10px;
+}
+
+#footer a:hover {
+	color: #FF0000;
+}

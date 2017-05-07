@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 /**
@@ -31,7 +32,16 @@ public class Ee extends AppCompatActivity {
         WebView wv;
 
         wv = (WebView) findViewById(R.id.ThreeMenview);
-        wv.loadUrl("file:///android_asset/gears.html");
+        wv.setWebViewClient(new WebViewClient());
+        wv.getSettings().setJavaScriptEnabled(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.getSettings().setAllowContentAccess(true);
+        wv.getSettings().setAllowFileAccess(true);
+        wv.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        wv.getSettings().setLoadWithOverviewMode(true);
+        wv.getSettings().setUseWideViewPort(true);
+
+        wv.loadUrl("file:///android_asset/3men.html");
     }
 
 
