@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
-        get_data(URL_FACULTY, directory);
+        //get_data(URL_FACULTY, directory);
         /**
          * Creating all buttons instances
          * */
@@ -172,56 +172,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void get_data(String url, final List list) {
-        pDialog.setMessage("Loading data ...");
-        showDialog();
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        StringRequest strReq = new StringRequest(Request.Method.GET,
-                url, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                hideDialog();
-                try {
-                    JSONArray jObj = new JSONArray(response);
-                    JSONObject json = null;
-                    final String[] name = new String[jObj.length()];
-                    for (int i = 0; i < jObj.length(); i++) {
-                        json = jObj.getJSONObject(i);
-                        String title = (json.isNull("faculty_title")) ? null : json.getString("faculty_title");
-                        String fullname = title + " " + json.getString("faculty_fname") + " " + json.getString("faculty_lname");
-                        name[i] = fullname;
-                    }
-                    if (list.isEmpty()) {
-                        for (int i = 0; i < name.length; i++) {
-                            list.add(name[i]);
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                hideDialog();
-                Toast.makeText(MainActivity.this, "Failure getting data from server", Toast.LENGTH_SHORT).show();
-            }
-        });
-        requestQueue.add(strReq);
-    }
-
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
+    
 }
