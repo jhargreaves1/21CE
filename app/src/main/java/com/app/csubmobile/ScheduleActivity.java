@@ -493,7 +493,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -502,15 +501,12 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import com.app.csubmobile.Volley.SlideShow;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
-import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.SettableFuture;
 import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationContext;
@@ -519,30 +515,32 @@ import com.microsoft.aad.adal.PromptBehavior;
 //import com.microsoft.samples.o365quickstart.R;
 import com.microsoft.services.orc.auth.AuthenticationCredentials;
 import com.microsoft.services.orc.core.DependencyResolver;
-import com.microsoft.services.orc.core.OrcCollectionFetcher;
 import com.microsoft.services.orc.http.Credentials;
 import com.microsoft.services.orc.http.impl.LoggingInterceptor;
 import com.microsoft.services.orc.http.impl.OAuthCredentials;
 import com.microsoft.services.orc.http.impl.OkHttpTransport;
 import com.microsoft.services.orc.serialization.impl.GsonSerializer;
 import com.microsoft.services.outlook.Event;
-import com.microsoft.services.outlook.Message;
-import com.microsoft.services.outlook.fetchers.CalendarFetcher;
-import com.microsoft.services.outlook.fetchers.EventCollectionOperations;
-import com.microsoft.services.outlook.fetchers.EventFetcher;
 import com.microsoft.services.outlook.fetchers.OutlookClient;
-import com.microsoft.services.outlook.*;
 
 import org.joda.time.DateTime;
-import org.joda.time.Instant;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TimeZone;
 
 
 public class ScheduleActivity extends AppCompatActivity
@@ -649,22 +647,35 @@ public class ScheduleActivity extends AppCompatActivity
             @Override
             public void onSuccess(final List<Event> result) {
                 logger.info("Preparing messages for display.");
-                List<Map<String, String>> listOfMessages = new ArrayList<Map<String, String>>();
+                List<Map<String, String>> listOfMessages = new ArrayList<>();
 
                 for (Event m : result) {
-                    Map<String, String> oneMessage = new HashMap<String, String>();
+                    Map<String, String> oneMessage = new HashMap<>();
                     oneMessage.put("subject", m.getSubject());
                     //oneMessage.put("body", m.getBodyPreview());
-                    //oneMessage.put("date", m.getStart().toString());
+                    //oneMessage.put("date", String.valueOf(m.getStart()));
 
                 /*if (m.getFrom() != null && m.getFrom().getEmailAddress() != null) {
                     oneMessage.put("from", "From: " + m.getFrom().getEmailAddress().getAddress());
                 }
                 */
                     DateTime startDate = new DateTime();
-                    String date = m.getStart().getDateTime();
+                    String oldstring = m.getStart().getDateTime();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S");
+                    formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+                    Date date = null;
+                    try {
+                        date = formatter.parse(oldstring);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy, Ka");
+                    sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
+                    String newstring = sdf.format(date);
                     String start = startDate.toString();
-                    if (date.compareTo(start) > 0)
+                    oneMessage.put("date", newstring);
+                    oneMessage.put("to", "  To  ");
+                    if (oldstring.compareTo(start) > 0)
                         listOfMessages.add(oneMessage);
                 }
 
@@ -676,8 +687,8 @@ public class ScheduleActivity extends AppCompatActivity
 
                 final SimpleAdapter adapter = new SimpleAdapter(ScheduleActivity.this, listOfMessages,
                         android.R.layout.simple_list_item_2,
-                        new String[]{"subject", "body", "date"},
-                        new int[]{android.R.id.text1, android.R.id.text2, android.R.id.text2});
+                        new String[]{"subject", "date",},
+                        new int[]{android.R.id.text1, android.R.id.text2});
 
                 runOnUiThread(new Runnable() {
                     @Override
