@@ -489,6 +489,7 @@ package com.app.csubmobile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.GravityCompat;
@@ -501,6 +502,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -536,6 +538,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -572,6 +576,14 @@ public class ScheduleActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         toggle.setDrawerIndicatorEnabled(false);
+
+        FloatingActionButton backtotop = (FloatingActionButton) findViewById(R.id.backtotop);
+        backtotop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lvMessages.smoothScrollToPosition(0, 0);
+            }
+        });
 
 
         lvMessages = (ListView) findViewById(R.id.lvMessages);
@@ -643,7 +655,6 @@ public class ScheduleActivity extends AppCompatActivity
     public void getMessages() {
         logger.info("Getting messages...");
         Futures.addCallback(_client.getMe().getEvents().read(), new FutureCallback<List<Event>>() {
-            //Futures.addCallback((ListenableFuture<List<Event>>) _client.getMe().getEvents().top(20), new FutureCallback<List<Event>>() {
             @Override
             public void onSuccess(final List<Event> result) {
                 logger.info("Preparing messages for display.");
@@ -652,30 +663,28 @@ public class ScheduleActivity extends AppCompatActivity
                 for (Event m : result) {
                     Map<String, String> oneMessage = new HashMap<>();
                     oneMessage.put("subject", m.getSubject());
-                    //oneMessage.put("body", m.getBodyPreview());
-                    //oneMessage.put("date", String.valueOf(m.getStart()));
 
-                /*if (m.getFrom() != null && m.getFrom().getEmailAddress() != null) {
-                    oneMessage.put("from", "From: " + m.getFrom().getEmailAddress().getAddress());
-                }
-                */
                     DateTime startDate = new DateTime();
-                    String oldstring = m.getStart().getDateTime();
+                    String start = startDate.toString();
+                    String oldstart = m.getStart().getDateTime();
+                    String oldend = m.getEnd().getDateTime();
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.S");
                     formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
                     Date date = null;
+                    Date date2 = null;
                     try {
-                        date = formatter.parse(oldstring);
+                        date = formatter.parse(oldstart);
+                        date2 = formatter.parse(oldend);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy, Ka");
                     sdf.setTimeZone(TimeZone.getTimeZone("America/Los_Angeles"));
-                    String newstring = sdf.format(date);
-                    String start = startDate.toString();
-                    oneMessage.put("date", newstring);
-                    oneMessage.put("to", "  To  ");
-                    if (oldstring.compareTo(start) > 0)
+                    String newstart = sdf.format(date);
+                    String newend = sdf.format(date2);
+                    newstart = newstart.concat("  TO  " + newend);
+                    oneMessage.put("date", newstart);
+                    if (oldstart.compareTo(start) > 0)
                         listOfMessages.add(oneMessage);
                 }
 
@@ -684,6 +693,9 @@ public class ScheduleActivity extends AppCompatActivity
                     oneMessage.put("subject", "You have no upcoming events");
                     listOfMessages.add(oneMessage);
                 }
+
+                Collections.sort(listOfMessages, eventComparator);
+                //Collections.reverse(listOfMessages);
 
                 final SimpleAdapter adapter = new SimpleAdapter(ScheduleActivity.this, listOfMessages,
                         android.R.layout.simple_list_item_2,
@@ -709,6 +721,12 @@ public class ScheduleActivity extends AppCompatActivity
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         _authContext.onActivityResult(requestCode, resultCode, data);
     }
+
+    public Comparator<Map<String, String>> eventComparator = new Comparator<Map<String, String>>() {
+        public int compare(Map<String, String> m1, Map<String, String> m2) {
+            return m1.get("date").compareTo(m2.get("date"));
+        }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
