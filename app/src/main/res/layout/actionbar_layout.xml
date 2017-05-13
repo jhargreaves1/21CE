@@ -9,6 +9,7 @@
         android:paddingLeft="15dip"
         android:paddingRight="15dip"
         android:scaleType="center"
-        android:src="@drawable/csubakersfield_logo" />
+        android:src="@drawable/csubakersfield_logo"
+        android:contentDescription="CSUB logo" />
 
 </LinearLayout>

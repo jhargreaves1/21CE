@@ -22,7 +22,7 @@ class TransViewAdapter extends BaseAdapter {
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> routes;
     //ArrayList<HashMap<String, String>> links;
-    ArrayList<String> links = new ArrayList<String>();
+    ArrayList<String> links = new ArrayList<>();
     HashMap<String, String> result_r = new HashMap< >();
     //HashMap<String, String> result_l = new HashMap< >();
     String result_l ;

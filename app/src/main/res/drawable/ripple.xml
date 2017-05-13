@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:color="#75336eff"
-    android:background="@color/CSUB_GOLD" >
+    android:background="@color/CSUB_GOLD"
+    tools:ignore="NewApi">
     <item>
         <color android:color="#25336eff" />
     </item>
-    <item android:id="@android:id/mask">
+    <item
+        android:id="@android:id/mask"
+        tools:ignore="NewApi">
         <shape android:shape="rectangle">
-            <solid android:color="?android:colorAccent" />
+            <solid
+                android:color="?android:colorAccent"
+                tools:ignore="NewApi" />
         </shape>
     </item>
 </ripple>

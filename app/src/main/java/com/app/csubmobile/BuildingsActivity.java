@@ -20,7 +20,7 @@ import java.util.List;
 public class BuildingsActivity extends AppCompatActivity {
     private ListView listView;
     private BuildingListAdapter listAdapter;
-    private List<BuildingItem> buildingItems = new ArrayList<BuildingItem>();
+    private List<BuildingItem> buildingItems = new ArrayList<>();
     private Intent i;
     AutoCompleteTextView txtSearch;
     EditText buildingSearch;

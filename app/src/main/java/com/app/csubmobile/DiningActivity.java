@@ -54,7 +54,7 @@ public class DiningActivity extends AppCompatActivity
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        dining_list = new ArrayList<DiningItem>();
+        dining_list = new ArrayList<>();
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);

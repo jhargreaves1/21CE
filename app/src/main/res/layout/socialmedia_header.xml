@@ -14,9 +14,9 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:srcCompat="@drawable/icon_fb"
+            android:contentDescription="facebook icon"
             android:id="@+id/fb_imgv"
-            android:layout_weight="0.5"
-            android:elevation="1dp" />
+            android:layout_weight="0.5" />
         <View
             android:layout_width="1dp"
             android:layout_height="fill_parent"
@@ -27,6 +27,7 @@
             android:layout_height="40dp"
             app:srcCompat="@drawable/icon_twitter"
             android:id="@+id/twitter_imgv"
+            android:contentDescription="twitter icon"
             android:layout_weight="0.5" />
 
     </LinearLayout>

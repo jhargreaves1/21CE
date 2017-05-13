@@ -9,13 +9,13 @@ import com.app.csubmobile.adapter.BuildingListAdapter;
 import com.app.csubmobile.data.BuildingItem;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 public class ListBuildings extends AppCompatActivity {
     private ListView listView;
     private BuildingListAdapter listAdapter;
-    private List<BuildingItem> buildingItems = new ArrayList<BuildingItem>();
+    private List<BuildingItem> buildingItems = new ArrayList<>();
     private Intent i;
     //private ListView list_buildings;
 

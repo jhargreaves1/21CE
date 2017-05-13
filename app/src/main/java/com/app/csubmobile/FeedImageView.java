@@ -1,20 +1,20 @@
 package com.app.csubmobile;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 
-public class FeedImageView extends ImageView {
+public class FeedImageView extends AppCompatImageView {
 
     public interface ResponseObserver {
-        public void onError();
+        void onError();
 
-        public void onSuccess();
+        void onSuccess();
     }
 
     private ResponseObserver mObserver;

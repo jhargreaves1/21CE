@@ -19,31 +19,17 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.app.csubmobile.Volley.SlideShow;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.app.csubmobile.EndpointsActivity.URL_FACULTY;
 
 public class DirectoryActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;
     private ProgressDialog pDialog;
-    public static List<String> directory = new ArrayList<String>();
+    public static List<String> directory = new ArrayList<>();
     private ArrayAdapter<String> adapter;
 
     private WebView myWebView;

@@ -186,12 +186,12 @@ public class NewsActivity extends AppCompatActivity
 
         @Override
         protected Void doInBackground(Void... params) {
-            arraylist = new ArrayList<HashMap<String, String>>();
+            arraylist = new ArrayList<>();
             try {
                 Document doc = Jsoup.connect(url).get();
                 for (Element div : doc.select("div[class=article_text]")) {
                     for (Element row : div.select("a")) {
-                        HashMap<String, String> map = new HashMap<String, String>();
+                        HashMap<String, String> map = new HashMap<>();
                         map.put("title", row.text());
                         map.put("link", row.attr("href"));
                         arraylist.add(map);

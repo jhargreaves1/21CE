@@ -6,27 +6,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.app.csubmobile.EndpointsActivity.URL_FACULTY;
-
 public class MainActivity extends AppCompatActivity {
     private ProgressDialog pDialog;
-    public static List<String> directory = new ArrayList<String>();
+    public static List<String> directory = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
         //get_data(URL_FACULTY, directory);
-        /**
-         * Creating all buttons instances
-         * */
+        /*
+          Creating all buttons instances
+          */
         // Dashboard News button
         Button btn_news = (Button) findViewById(R.id.btn_news);
 
@@ -68,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         // Dashboard Blackboard/Moodle button
         Button btn_blackboard_moodle = (Button) findViewById(R.id.btn_blackboard_moodle);
 
-        /**
-         * Handling all button click events
-         * */
+        /*
+          Handling all button click events
+          */
 
         // Listening to News Feed button click
         btn_news.setOnClickListener(new View.OnClickListener() {

@@ -14,7 +14,6 @@ import com.app.csubmobile.MapActivity;
 import com.app.csubmobile.R;
 import com.app.csubmobile.data.BuildingItem;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +29,8 @@ public class BuildingListAdapter extends ArrayAdapter<BuildingItem> {
         this.resource = resource;
         this.textViewResourceId = textViewResourceId;
         this.items = items;
-        tempItems = new ArrayList<BuildingItem>(items); // this makes the difference.
-        suggestions = new ArrayList<BuildingItem>();
+        tempItems = new ArrayList<>(items); // this makes the difference.
+        suggestions = new ArrayList<>();
     }
 
     @Override
@@ -54,7 +53,7 @@ public class BuildingListAdapter extends ArrayAdapter<BuildingItem> {
                 BuildingItem selectedBuilding = items.get(position);
                 if (selectedBuilding != null) {
                     Intent i = new Intent(context, MapActivity.class);
-                    i.putExtra("Building", (Serializable) selectedBuilding);
+                    i.putExtra("Building", selectedBuilding);
                     context.startActivity(i);
                     ((Activity)context).finish();
                 }

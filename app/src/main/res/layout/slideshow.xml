@@ -22,12 +22,13 @@
 
         android:alpha="0.15"
         android:clickable="true"
-        android:onClick="ee"
+
         android:text=" "
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="27dp" />
     <ImageView
         android:id="@+id/ripple_view"
+        android:contentDescription="slideshow image with ripple view"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

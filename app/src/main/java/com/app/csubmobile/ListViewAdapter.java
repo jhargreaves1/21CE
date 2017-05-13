@@ -1,8 +1,5 @@
 package com.app.csubmobile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -12,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class ListViewAdapter extends BaseAdapter {
 
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> data;
-    HashMap<String, String> resultp = new HashMap<String, String>();
+    HashMap<String, String> resultp = new HashMap<>();
 
     public ListViewAdapter(Context context,
                            ArrayList<HashMap<String, String>> arraylist) {

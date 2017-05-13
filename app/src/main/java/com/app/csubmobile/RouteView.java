@@ -1,5 +1,6 @@
 package com.app.csubmobile;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -15,12 +16,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.TextView;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-
-import java.io.IOException;
 
 /**
  * The RouteView activity downloads the associated pdf and displays it in the route xml
@@ -41,6 +36,7 @@ public class RouteView extends AppCompatActivity
     String link;
 
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

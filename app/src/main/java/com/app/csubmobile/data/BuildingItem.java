@@ -1,10 +1,8 @@
 package com.app.csubmobile.data;
 
-/**
- * Created by Jonathan on 2/19/2017.
+/*
+  Created by Jonathan on 2/19/2017.
  */
-
-import android.support.annotation.NonNull;
 
 import java.io.Serializable;
 

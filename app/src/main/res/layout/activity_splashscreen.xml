@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/splash"
         android:src="@drawable/csub_logo"
+        android:contentDescription="CSUB logo"
         android:adjustViewBounds="false"
         android:padding="20dp" />
 

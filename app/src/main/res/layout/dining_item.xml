@@ -26,6 +26,7 @@
 
             <ImageView
                 android:id="@+id/dining_icon"
+                android:contentDescription="dining icon"
                 android:layout_width="@dimen/feed_item_profile_pic"
                 android:layout_height="@dimen/feed_item_profile_pic"
                 android:scaleType="fitCenter">

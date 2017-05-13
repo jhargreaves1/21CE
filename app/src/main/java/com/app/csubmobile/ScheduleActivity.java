@@ -514,7 +514,6 @@ import com.microsoft.aad.adal.AuthenticationCallback;
 import com.microsoft.aad.adal.AuthenticationContext;
 import com.microsoft.aad.adal.AuthenticationResult;
 import com.microsoft.aad.adal.PromptBehavior;
-//import com.microsoft.samples.o365quickstart.R;
 import com.microsoft.services.orc.auth.AuthenticationCredentials;
 import com.microsoft.services.orc.core.DependencyResolver;
 import com.microsoft.services.orc.http.Credentials;
@@ -526,15 +525,9 @@ import com.microsoft.services.outlook.Event;
 import com.microsoft.services.outlook.fetchers.OutlookClient;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatter.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -545,6 +538,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
+
+//import com.microsoft.samples.o365quickstart.R;
 
 
 public class ScheduleActivity extends AppCompatActivity
@@ -689,7 +684,7 @@ public class ScheduleActivity extends AppCompatActivity
                 }
 
                 if (listOfMessages.isEmpty()) {
-                    Map<String, String> oneMessage = new HashMap<String, String>();
+                    Map<String, String> oneMessage = new HashMap<>();
                     oneMessage.put("subject", "You have no upcoming events");
                     listOfMessages.add(oneMessage);
                 }

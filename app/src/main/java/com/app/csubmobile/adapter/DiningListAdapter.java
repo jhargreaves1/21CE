@@ -3,21 +3,17 @@ package com.app.csubmobile.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.app.csubmobile.MapActivity;
 import com.app.csubmobile.R;
-import com.app.csubmobile.data.BuildingItem;
 import com.app.csubmobile.data.DiningItem;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -93,9 +89,9 @@ public class DiningListAdapter extends BaseAdapter {
                 DiningItem selectedBuilding = feedItems.get(position);
                 if (selectedBuilding != null && selectedBuilding.getLat()!= 0.0) {
                     Intent i = new Intent(activity, MapActivity.class);
-                    i.putExtra("Dining", (Serializable) selectedBuilding);
+                    i.putExtra("Dining", selectedBuilding);
                     activity.startActivity(i);
-                    ((Activity)activity).finish();
+                    activity.finish();
                 }
                 //Toast.makeText(context, selectedBuilding.getName()+"", Toast.LENGTH_SHORT).show();
             }

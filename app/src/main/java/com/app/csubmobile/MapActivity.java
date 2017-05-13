@@ -85,7 +85,7 @@ import retrofit2.Response;
  * it allows for displaying a map of campus using the Mapbox API,
  * providing route/directions to buildings on campus and displaying
  * pictures and/or captions of each building on campus.
- * 
+ *
  */
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Serializable{
@@ -107,7 +107,7 @@ public class MapActivity extends AppCompatActivity
     private Intent i;
     private BuildingItem selectedBuilding = null;
     private DiningItem selectedDining = null;
-    private List<BuildingItem> buildings = new ArrayList<BuildingItem>();
+    private List<BuildingItem> buildings = new ArrayList<>();
     private List<LatLng> polygon;
     private Criteria criteria;
     private String bestProvider;
@@ -116,7 +116,7 @@ public class MapActivity extends AppCompatActivity
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        polygon = new ArrayList<LatLng>();
+        polygon = new ArrayList<>();
         markersOn = false;
 
         // Checking for extra contents from search
@@ -143,7 +143,7 @@ public class MapActivity extends AppCompatActivity
         buildingActionButton = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.buildingListBtn);
 
         criteria = new Criteria();
-        bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true)).toString();
+        bestProvider = String.valueOf(locationManager.getBestProvider(criteria, true));
 
         // Create a mapView
         mapView = (MapView) findViewById(R.id.mapview);
@@ -692,7 +692,7 @@ public class MapActivity extends AppCompatActivity
 
         ArrayList<String> titles = new ArrayList<>();
         ArrayList<LatLng> markers = new ArrayList<>();
-        ArrayList<ArrayList<LatLng>> polyTemp = new ArrayList<ArrayList<LatLng>>();
+        ArrayList<ArrayList<LatLng>> polyTemp = new ArrayList<>();
         List<Double> Lng = new ArrayList<>();
         List<Double> Lat = new ArrayList<>();
 
@@ -737,7 +737,7 @@ public class MapActivity extends AppCompatActivity
                         if (!TextUtils.isEmpty(type) && type.equalsIgnoreCase("Polygon")) {
                             JSONArray coord1 = geometry.getJSONArray("coordinates");
                             for (int j = 0; j < coord1.length(); j++) {
-                                ArrayList<LatLng> inner = new ArrayList<LatLng>();
+                                ArrayList<LatLng> inner = new ArrayList<>();
                                 JSONArray coord2 = coord1.getJSONArray(j);
                                 for (int k = 0; k < coord2.length(); k++) {
                                     JSONArray coord3 = coord2.getJSONArray(k);

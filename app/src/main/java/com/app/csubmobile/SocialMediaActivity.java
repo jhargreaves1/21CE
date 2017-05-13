@@ -79,7 +79,7 @@ public class SocialMediaActivity extends AppCompatActivity
 
         // listview
         listView = (ListView) findViewById(R.id.list);
-        feedItems = new ArrayList<FeedItem>();
+        feedItems = new ArrayList<>();
         listAdapter = new FeedListAdapter(SocialMediaActivity.this, feedItems);
         listView.setAdapter(listAdapter);
 
@@ -149,8 +149,8 @@ public class SocialMediaActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         // getting header icons info
-        fb_bar = (View) findViewById(R.id.fb_bar);
-        twitter_bar = (View) findViewById(R.id.twitter_bar);
+        fb_bar = findViewById(R.id.fb_bar);
+        twitter_bar = findViewById(R.id.twitter_bar);
         fb_icon = (ImageView) findViewById(R.id.fb_imgv);
         twitter_icon = (ImageView) findViewById(R.id.twitter_imgv);
 

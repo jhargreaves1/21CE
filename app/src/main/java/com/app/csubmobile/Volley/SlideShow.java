@@ -3,16 +3,12 @@ package com.app.csubmobile.Volley;
 // Created by captnemo on 3/18/2017.
 
 import android.content.Intent;
-import android.net.Uri;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.transition.Slide;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -22,14 +18,9 @@ import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import com.app.csubmobile.Ee;
-import com.app.csubmobile.EventsActivity;
 import com.app.csubmobile.R;
 
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.app.csubmobile.R.layout.ee;
 
 /**
  * created by John Hargreaves
