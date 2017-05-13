@@ -30,6 +30,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
+/**
+ * Created by John Hargreaves
+ * This RouteView activity displays a list of route scraped from the GET
+ * bus web page. Each entry is clickable leading to PDF's of the
+ * associated time table and route map
+ */
 public class TransportationActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     DrawerLayout drawer;

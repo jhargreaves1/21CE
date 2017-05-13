@@ -12,6 +12,10 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * created by John Hargreaves
+ * stores list of routes and related links to pdfs for display in transportation activity
+ */
 class TransViewAdapter extends BaseAdapter {
 
     Context context;

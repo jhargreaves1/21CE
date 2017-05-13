@@ -19,13 +19,17 @@ import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
 /**
- * Created by captnemo on 4/7/2017.
+ * Created by John Hargreaves
+ * This easter egg activity displays html files stored in the assets folder
+ * and allows javascript used for game AI to run and make a simple variant
+ * of a tic-tac-toe type game to run
  */
 
 public class Ee extends AppCompatActivity {
     DrawerLayout drawer;
 
     @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ee);

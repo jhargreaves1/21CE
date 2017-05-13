@@ -31,6 +31,13 @@ import java.util.TimerTask;
 
 import static com.app.csubmobile.R.layout.ee;
 
+/**
+ * created by John Hargreaves
+ * The slide show activity creates a randomly selected image resource and matching caption
+ * then displays them in the slideshow xml layout
+ * it also contains a count so that if the user clicks on the transparent button three times it will open
+ * the easter egg activity
+ */
 public class SlideShow  extends AppCompatActivity implements View.OnClickListener{
     Animation fadein, fadeout, zoomin;
     Button button;

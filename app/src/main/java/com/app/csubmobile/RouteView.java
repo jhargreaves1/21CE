@@ -22,6 +22,10 @@ import org.jsoup.nodes.Element;
 
 import java.io.IOException;
 
+/**
+ * The RouteView activity downloads the associated pdf and displays it in the route xml
+ * layout.
+ */
 
 public class RouteView extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
