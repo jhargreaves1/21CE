@@ -79,6 +79,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Created by Jonathan, Quy, John and Kevin
+ * The map activity is the main activity in the app
+ * it allows for displaying a map of campus using the Mapbox API,
+ * providing route/directions to buildings on campus and displaying
+ * pictures and/or captions of each building on campus.
+ * 
+ */
 public class MapActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Serializable{
 
